@@ -1,0 +1,14 @@
+﻿<Window x:Class="Notepad.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Notepad"
+        mc:Ignorable="d"
+        Title="Notepad" Height="450" Width="800">
+    <Grid>
+        <ScrollBar HorizontalAlignment="Left" x:Name="Scrollbar_Main" Margin="773,29,0,0" VerticalAlignment="Top" RenderTransformOrigin="4.9,-1.852" Height="337"/>
+        <TextBlock HorizontalAlignment="Left" x:Name="Textblock_main" Height="321" Margin="44,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="655"/>
+
+    </Grid>
+</Window>
