@@ -8,7 +8,32 @@
         Title="Notepad" Height="450" Width="800">
     <Grid>
         <ScrollBar HorizontalAlignment="Left" x:Name="Scrollbar_Main" Margin="773,29,0,0" VerticalAlignment="Top" RenderTransformOrigin="4.9,-1.852" Height="337"/>
-        <TextBlock HorizontalAlignment="Left" x:Name="Textblock_main" Height="321" Margin="44,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="655"/>
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Header ="Open" x:Name="OpenFile" Click="OpenFile_OnClick"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="Save as"></MenuItem>
+                <MenuItem Header="Print"></MenuItem>
+
+            </MenuItem>
+
+            <MenuItem Header="Edit">
+                <MenuItem Header="Change Font"></MenuItem>
+                <MenuItem Header="Time/date Stamp"></MenuItem>
+
+            </MenuItem>
+
+            <MenuItem Header="Exit" Name="Ex" Height="51" Width="42"></MenuItem>
+
+        </Menu>
+        <TextBlock x:Name="Textbox" TextWrapping="Wrap" Text="" Margin="22,46,27,41"/>
+
+
+
+
 
     </Grid>
+
+
+
 </Window>
