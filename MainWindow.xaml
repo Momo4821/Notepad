@@ -11,20 +11,21 @@
         <Menu>
             <MenuItem Header="File">
                 <MenuItem Header ="Open" x:Name="OpenFile" Click="OpenFile_OnClick"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="Save as"></MenuItem>
-                <MenuItem Header="Print"></MenuItem>
+                <MenuItem Header="Save" x:Name="Save" Click="Save_OnClick"></MenuItem>
+                <MenuItem Header="Saveas" x:Name="SaveAs" Click=" Save_As_OnClick"></MenuItem>
+                <MenuItem Header="Print" x:Name="Print" Click="Print_OnClick"></MenuItem>
 
             </MenuItem>
 
             <MenuItem Header="Edit">
-                <MenuItem Header="Change Font"></MenuItem>
-                <MenuItem Header="Time/date Stamp"></MenuItem>
+                <MenuItem Header="Change Font" x:Name="Change Font" Click="Change_Font_OnClick"></MenuItem>
+                <MenuItem Header="Time/date Stamp" x:Name="Time/Date Stamp" Click="Time_Date_Stamp_OnClick"></MenuItem>
 
             </MenuItem>
 
-            <MenuItem Header="Exit" Name="Ex" Height="51" Width="42"></MenuItem>
-            <TextBlock x:Name="Textblock_File_Path" TextWrapping="Wrap" Text="" Height="17" Width="347"/>
+            <MenuItem Header="Exit" Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
+            <TextBlock x:Name="Textblock_File_Path" TextWrapping="Wrap" Text="" Height="17" Width="347" />
+            <TextBlock x:Name="Textblock_File_Type" TextWrapping="Wrap" Text="" Height="17" Width="294"/>
 
 
 
