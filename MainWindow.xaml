@@ -24,11 +24,13 @@
             </MenuItem>
 
             <MenuItem Header="Exit" Name="Ex" Height="51" Width="42"></MenuItem>
+            <TextBlock x:Name="Textblock_File_Path" TextWrapping="Wrap" Text="" Height="17" Width="347"/>
+
+
 
         </Menu>
-        <TextBlock x:Name="Textbox" TextWrapping="Wrap" Text="" Margin="22,46,27,41"/>
-
-
+        <ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/>
+        <TextBox x:Name="Texbox_Main" TextWrapping="Wrap" Text="" Margin="61,70,83,114"/>
 
 
 
