@@ -46,7 +46,7 @@ namespace Notepad
             {
         
                 file_Path = openFileDialog.FileName;
-                file_type = openFileDialog.DefaultExt;
+                file_type = Path.GetExtension(file_Path);
                 var file_Stream = openFileDialog.OpenFile();
                
 
@@ -102,9 +102,9 @@ namespace Notepad
             string caption = "Do you wish to save your progress";
             DialogResult result;
 
-                //messagebox to show if the user should save or not
+            //messagebox to show if the user should save or not
 
-                using (StreamWriter writer = new StreamWriter())
+           
 
 
         }

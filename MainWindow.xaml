@@ -18,8 +18,8 @@
             </MenuItem>
 
             <MenuItem Header="Edit">
-                <MenuItem Header="Change Font" x:Name="Change Font" Click="Change_Font_OnClick"></MenuItem>
-                <MenuItem Header="Time/date Stamp" x:Name="Time/Date Stamp" Click="Time_Date_Stamp_OnClick"></MenuItem>
+                <MenuItem Header="ChangeFont" x:Name="ChangeFont" Click="Change_Font_OnClick"></MenuItem>
+                <MenuItem Header="Time_dateStamp" x:Name="Time_DateStamp" Click="Time_Date_Stamp_OnClick"></MenuItem>
 
             </MenuItem>
 
