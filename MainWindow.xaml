@@ -10,6 +10,7 @@
         <ScrollBar HorizontalAlignment="Left" x:Name="Scrollbar_Main" Margin="773,29,0,0" VerticalAlignment="Top" RenderTransformOrigin="4.9,-1.852" Height="337"/>
         <Menu>
             <MenuItem Header="File">
+                <MenuItem Header="new" x:Name="New" Click="New_OnClick"> </MenuItem>
                 <MenuItem Header ="Open" x:Name="OpenFile" Click="OpenFile_OnClick"></MenuItem>
                 <MenuItem Header="Save" x:Name="Save" Click="Save_OnClick"></MenuItem>
                 <MenuItem Header="Saveas" x:Name="SaveAs" Click=" Save_As_OnClick"></MenuItem>
@@ -31,7 +32,7 @@
 
         </Menu>
         <ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/>
-        <TextBox x:Name="Texbox_Main" TextWrapping="Wrap" Text="" Margin="61,70,83,114"/>
+        <TextBox x:Name="Texbox_Main" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Text="" Margin="61,70,58,46" HorizontalScrollBarVisibility="Auto"/>
 
 
 

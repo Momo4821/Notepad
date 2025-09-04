@@ -1,17 +1,19 @@
 ﻿using System.IO;
+using System.Media;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using System.Windows.Media.Animation;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
 using TextBox = System.Windows.Controls.TextBox;
@@ -28,22 +30,11 @@ namespace Notepad
             InitializeComponent();
         }
 
-
-        
-
-
-
         public void OpenFile_OnClick(object sender, RoutedEventArgs e)
         {
-//open file
-            var file_Content = string.Empty; 
-            var file_Path = string.Empty; 
+           var file_Path = string.Empty; 
             using OpenFileDialog openFileDialog = new OpenFileDialog();
             var file_type = string.Empty;
-            
-
-            
-
 
             openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
@@ -77,12 +68,11 @@ namespace Notepad
                     throw;
                 }
 
+
+
+
+
             }
-
-
-
-           
-
         }
 
 
@@ -104,25 +94,43 @@ namespace Notepad
             if (result == System.Windows.Forms.DialogResult.Yes)
             {
                 //we need to append the file that is open in the text box
-                using (StreamWriter sw = File.AppendText(Textblock_File_Path.Text.ToString()))
+            /*    using (StreamWriter sw = File.AppendText(Textblock_File_Path.Text.ToString()))
                 {
-                    sw.WriteLine(Texbox_Main.Text);
+                    sw.WriteLine(Texbox_Main.Text); 
                     
-                    
-                }
+                }*/
+            File.AppendText(Textblock_File_Path.ToString());
+            File.WriteAllText(Textblock_File_Path.Text.ToString(),Texbox_Main.Text);
+
             }
 
             //messagebox to show if the user should save or not
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
-           
-
-
+        
         private void Save_As_OnClick(object sender, RoutedEventArgs e)
         {
 
 
-            DirectoryInfo[] currentdirectory = new DirectoryInfo("C:").GetDirectories();
+            //this will save the file as a new file
+            SaveFileDialog save_as = new SaveFileDialog();
+
+            save_as.FileName = "Document"; // Default file name
 
 
 
@@ -137,22 +145,65 @@ namespace Notepad
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
-            string Exit_Caption = "Are you sure you want to exit?";
+            
+            
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            string caption = "Do you wish to save your progress";
+            DialogResult result;
+            result = System.Windows.Forms.MessageBox.Show(caption, Texbox_Main.Text, buttons);
+            Convert.ToBoolean(result);
 
-            MessageBoxResult result = MessageBox.Show(Exit_Caption, "Exit Notepad",
-                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case System.Windows.Forms.DialogResult.Yes :
+                    using StreamWriter sr = new StreamWriter;
+                    break;
 
+            }
+
+
+
+            //close app
             this.Close();
+
+
+
         }
 
         private void Time_Date_Stamp_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            DateTime date_stamp = DateTime.UtcNow;
+
+            Texbox_Main.Text = date_stamp.ToString();
+
+
+            if (Keyboard.IsKeyDown(Key.F5)) // need to work on 
+            {
+                
+                Texbox_Main.Text = date_stamp.ToString();
+
+            }
+
         }
 
         private void Change_Font_OnClick(object sender, RoutedEventArgs e)
+
         {
+
+
             throw new NotImplementedException();
+
+
+        }
+
+        private void New_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+
+
+
+
+
         }
     }
 
