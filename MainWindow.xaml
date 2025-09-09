@@ -21,7 +21,7 @@
             <MenuItem Header="Edit">
                 <MenuItem Header="ChangeFont" x:Name="ChangeFont" Click="Change_Font_OnClick"></MenuItem>
                 <MenuItem Header="Time_dateStamp" x:Name="Time_DateStamp" Click="Time_Date_Stamp_OnClick"></MenuItem>
-
+ 
             </MenuItem>
 
             <MenuItem Header="Exit" Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
@@ -31,8 +31,8 @@
 
 
         </Menu>
-        <ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/>
-        <TextBox x:Name="Texbox_Main" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Text="" Margin="61,70,58,46" HorizontalScrollBarVisibility="Auto"/>
+        <!--<ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/> -->
+        <TextBox x:Name="Textbox_Main" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Text="" Margin="61,70,58,46"  VerticalScrollBarVisibility="Visible"/>
 
 
 
