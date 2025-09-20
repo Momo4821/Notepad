@@ -33,22 +33,24 @@ namespace Notepad
 
 
 
-
-        public OpenFileDialog openfile;
+        public FileStream FileStream { get; set; }
+        public OpenFileDialog openfile_dialog; 
+        public MessageBoxButtons Buttons = MessageBoxButtons.YesNoCancel;
+        public SaveFileDialog savefile_dialog;
         public string file_Path { get; set; }
+        public StreamWriter streamWriter;
 
         public void OpenFile_OnClick(object sender, RoutedEventArgs e)
         {
-            using OpenFileDialog openFileDialog = new OpenFileDialog();
+           openfile_dialog = new OpenFileDialog();
             var file_type = string.Empty;
-
-            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            openfile_dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (openfile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
-                file_Path = openFileDialog.FileName;
+                file_Path = openfile_dialog.FileName;
                 file_type = Path.GetExtension(file_Path);
-                var file_Stream = openFileDialog.OpenFile();
+                var file_Stream = openfile_dialog.OpenFile();
 
 
                 try
@@ -77,8 +79,22 @@ namespace Notepad
         public void Save_OnClick(object sender, RoutedEventArgs e)
 
         {
-            //Messagebox for save file
-            MessageBoxButtons Buttons = MessageBoxButtons.YesNoCancel;
+            Buttons = MessageBoxButtons.YesNoCancel;
+            string caption = "Do you wish to save the file?";
+            DialogResult Result;
+            //Result = System.Windows.Forms.MessageBox.Show(caption,);
+
+
+
+
+
+
+        }
+
+        private void Save_As_OnClick(object sender, RoutedEventArgs e)
+        {
+
+            Buttons = MessageBoxButtons.YesNoCancel;
             string caption = "Do you wish to save file?";
             DialogResult Result;
             Result = System.Windows.Forms.MessageBox.Show(caption, String.Empty, Buttons);
@@ -86,29 +102,32 @@ namespace Notepad
 
             
             //save dioluge option                                   
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            savefile_dialog  = new SaveFileDialog();
+            savefile_dialog.Title = "Do you wish to save the file?";
             
             
             //file path can't be null so we need to get directories for the file to be saved
             //DirectoryInfo directory = new DirectoryInfo(Path.GetDirectoryName(@"C:\Downloads"));
 
-            saveFileDialog.Filter = "Text files (*.txt)|*.txt";
-            saveFileDialog.AddExtension = true;
+            savefile_dialog.Filter = "Text files (*.txt)|*.txt";
+            savefile_dialog.AddExtension = true;
             
             switch (Result)
             {
                 case System.Windows.Forms.DialogResult.Yes:
-                    if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK && File.Exists(openfile_dialog.FileName))
                     {
-                        
-                        using StreamWriter sw = new StreamWriter(saveFileDialog.FileName);
+                        using StreamWriter sw = File.AppendText(openfile_dialog.FileName);
                         {
+                            
                             sw.Write(Textbox_Main.Text.ToString());
                             
                         }
                         
                         
                     }
+                    
+                    
 
                     break;    
                 
@@ -118,7 +137,7 @@ namespace Notepad
                     break;
                 
                 case System.Windows.Forms.DialogResult.Cancel:
-                break;
+                    break;
             }
             
             
@@ -127,23 +146,9 @@ namespace Notepad
 
 
         }
+     
+
         
-        
-
-        private void Save_As_OnClick(object sender, RoutedEventArgs e)
-        {
-
-
-            //this will save the file as a new file
-            if (file_Path != string.Empty)
-            {
-                
-                
-                
-            }
-
-
-        }
 
         private void Print_OnClick(object sender, RoutedEventArgs e)
         {
@@ -156,14 +161,96 @@ namespace Notepad
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Buttons = MessageBoxButtons.YesNoCancel;
+            string caption = "Do you wish to save the file Before Exiting?";
+            DialogResult Result;
+            Result = System.Windows.Forms.MessageBox.Show(caption, String.Empty, Buttons);
+            Convert.ToBoolean(Result);
+
+            
+
+            switch(Result)
+             {
+                 case System.Windows.Forms.DialogResult.Yes:
+                     if (string.IsNullOrEmpty(file_Path))
+                     {
+                        
+                         
+                         
+                         if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                         {
+                                file_Path = savefile_dialog.FileName;
+                             
+                             using (FileStream fs = new FileStream(file_Path, FileMode.Create))
+                             {
+                                 byte[] info = new UTF8Encoding(true).GetBytes(" ");   
+                                 
+                                fs.Write(info, 0, info.Length);
+                                 
+                             }
+
+                         }
+                       
+                         
+                         
+                     }
+
+                     try
+                     {
+
+                         if (File.Exists(file_Path))
+                         {
+                             File.WriteAllText(Path.GetFullPath(file_Path), Textbox_Main.Text);
+
+                         }
+                         
+                         
+                     }
+                     catch (Exception exception)
+                     {
+                         Console.WriteLine(exception);
+                         throw;
+                     }
+                     
+                     
+                     break;
+                 
+                 case System.Windows.Forms.DialogResult.No:
+                     this.Close();
+                     
+                     break;
+                     case System.Windows.Forms.DialogResult.Cancel:
+                         break;
+                 
+             }
+
+
+
+
+
+
+
+
         }
 
         private void Time_Date_Stamp_OnClick(object sender, RoutedEventArgs e)
         {
+            DateTime datetimestamp = new DateTime();
+            Convert.ToString(datetimestamp);
 
+            if (Keyboard.IsKeyDown(Key.F5))
+            {
+                
+                //if file is open not new
+                using (FileStream fs = new FileStream(openfile_dialog.FileName, FileMode.Open))
+                {
+    
 
+                }
+                
+            }
 
+                
 
 
 
@@ -181,13 +268,29 @@ namespace Notepad
 
         private void New_OnClick(object sender, RoutedEventArgs e)
         {
+        MessageBoxButtons Buttons = MessageBoxButtons.YesNoCancel;
+        string caption = "Do you wish to save file?";
+        DialogResult Result;
+        Result = System.Windows.Forms.MessageBox.Show(caption, String.Empty, Buttons);
+        Convert.ToString(Result);
+      
 
-            MessageBoxButtons Buttons = MessageBoxButtons.YesNoCancel;
-            string caption = "Do you wish to save your file before creating a new one";
-            var new_file = new OpenFileDialog();
-            DialogResult result_new;
+            //check if file is open and save before createing a new file
 
-
+            switch (Result)
+            {
+                
+                case System.Windows.Forms.DialogResult.Yes:
+                    //checkf file
+                    
+                    break;
+                case System.Windows.Forms.DialogResult.No:
+                    break;
+                    case System.Windows.Forms.DialogResult.Cancel:
+                        break;
+            }
+            
+           
 
             /*//create a new document
             if (Textbox_Main.Text != string.Empty)
