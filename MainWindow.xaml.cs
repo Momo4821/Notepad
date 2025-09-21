@@ -166,53 +166,48 @@ namespace Notepad
             DialogResult Result;
             Result = System.Windows.Forms.MessageBox.Show(caption, String.Empty, Buttons);
             Convert.ToBoolean(Result);
-
+         
             
 
             switch(Result)
              {
                  case System.Windows.Forms.DialogResult.Yes:
-                     if (string.IsNullOrEmpty(file_Path))
-                     {
-                        
-                         
-                         
-                         if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                     try
+                     { //save exisiting file
+                         if (File.Exists(file_Path))
                          {
-                                file_Path = savefile_dialog.FileName;
-                             
-                             using (FileStream fs = new FileStream(file_Path, FileMode.Create))
+                             File.WriteAllText(Path.GetFullPath(file_Path), Textbox_Main.Text);
+                             MessageBox.Show("File Saved", file_Path);
+
+                         }
+                         //create new file
+                         else
+                         {
+                             var savefile_dialog_new_path = new SaveFileDialog();
+                             string new_File_Path = savefile_dialog_new_path.FileName;
+                             savefile_dialog = new SaveFileDialog();
+                             savefile_dialog.Title = "Save As";
+                             savefile_dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                             savefile_dialog.AddExtension = true;
+                             if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                              {
-                                 byte[] info = new UTF8Encoding(true).GetBytes(" ");   
-                                 
-                                fs.Write(info, 0, info.Length);
+                                 using (streamWriter = new StreamWriter(savefile_dialog.FileName))
+                                 {
+                                     streamWriter.Write(Textbox_Main.Text);
+                                     streamWriter.Close();
+                                     MessageBox.Show("File Saved", new_File_Path);
+                                     this.Close();
+                                 }
                                  
                              }
 
                          }
-                       
-                         
-                         
-                     }
-
-                     try
-                     {
-
-                         if (File.Exists(file_Path))
-                         {
-                             File.WriteAllText(Path.GetFullPath(file_Path), Textbox_Main.Text);
-
-                         }
-                         
-                         
                      }
                      catch (Exception exception)
                      {
                          Console.WriteLine(exception);
                          throw;
                      }
-                     
-                     
                      break;
                  
                  case System.Windows.Forms.DialogResult.No:
@@ -224,13 +219,7 @@ namespace Notepad
                  
              }
 
-
-
-
-
-
-
-
+            
         }
 
         private void Time_Date_Stamp_OnClick(object sender, RoutedEventArgs e)
