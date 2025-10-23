@@ -17,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.VisualBasic.CompilerServices;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using static Notepad.FilesModified;
+using static Notepad.MainWindow;
 using Keyboard = Microsoft.VisualBasic.Devices.Keyboard;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
@@ -28,7 +28,7 @@ namespace Notepad
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public  class MainWindow : Window
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
@@ -77,7 +77,7 @@ namespace Notepad
 
 
 
-Buttons
+
             openfile_dialog = new OpenFileDialog();
             var file_type = string.Empty;
             openfile_dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -224,7 +224,7 @@ Buttons
                     p.DefaultPageSettings.Landscape = true;
                     p.DefaultPageSettings.Color = false;
                     p.DocumentName = openfile_dialog.FileName;
-                
+                    Print.IsSubmenuOpen = true;
 
                 }
 
