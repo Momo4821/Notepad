@@ -32,12 +32,14 @@ namespace Notepad
     {
         public MainWindow()
         {
-            var file_modified = new FilesModified();
+            
             InitializeComponent();
         }
 
         
     
+        //orignial text
+        
         
         //file stream variable
         public FileStream FileStream { get; }
@@ -61,23 +63,18 @@ namespace Notepad
         //downloads folder path
         public string downloads = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
 
-
-
-
-
-        //create file in use method
-
-
-
-
-
+            // files modified class 
+        public FilesModified files_Modified = new FilesModified();
+        
+        
+        
 
         public void OpenFile_OnClick(object sender, RoutedEventArgs e)
         {
-
-
-
-
+            /*var files_Modified = new FilesModified();*/
+           
+           
+            
             openfile_dialog = new OpenFileDialog();
             var file_type = string.Empty;
             openfile_dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -101,10 +98,14 @@ namespace Notepad
 
 
                 }
-                
 
 
 
+
+            }
+            else if (openfile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                files_Modified.Prompt_save_when_Open_New_File_when_file_is_Already_Open();
             }
 
         }
@@ -143,9 +144,9 @@ namespace Notepad
                             {
                                 var savefile_dialog_new_path = new SaveFileDialog();
                                 string new_File_Path = savefile_dialog_new_path.FileName;
-                                savefile_dialog = new SaveFileDialog();
                                 savefile_dialog.Title = "Save As";
                                 savefile_dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                                savefile_dialog.InitialDirectory = downloads;
                                 savefile_dialog.AddExtension = true;
                                 if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                                 {
