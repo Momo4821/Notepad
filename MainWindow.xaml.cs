@@ -1,7 +1,9 @@
-﻿using System.Drawing.Printing;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System.Drawing.Printing;
 using System.IO;
 using System.Media;
 using System.Printing.IndexedProperties;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,15 +17,24 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.VisualBasic.CompilerServices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using static Notepad.MainWindow;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using static Notepad.FilesModified;
 using Keyboard = Microsoft.VisualBasic.Devices.Keyboard;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
 using Size = System.Windows.Size;
 using TextBox = System.Windows.Controls.TextBox;
+
 namespace Notepad
+
+// private variables and methods --> modified variable only main window set it not somethign else
+// textchanged event just set to true if file is modified then call it in the openclick_method before opening a new file
+// research more about global variables in C# WPF applications
+//research summary comments
+//research event handlers not using onclick methods. 
+//run tests before pushed to git hub read about unit testing in WPF applications
+
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -32,24 +43,29 @@ namespace Notepad
     {
         public MainWindow()
         {
-            
+
             InitializeComponent();
+            Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
+            // event handler to check if the text has been modified
+
         }
 
-        
-    
+
+
         //orignial text
-        
-        
+        private string Original_Text_Value;
+        public bool ismodified { get; set; }
+
+
         //file stream variable
-        public FileStream FileStream { get; }
+        public FileStream file_Stream { get; set; }
 
         //file dialog variables
-        public OpenFileDialog openfile_dialog;
-        public SaveFileDialog savefile_dialog;
+        public OpenFileDialog openfile_dialog { get; set; }
+        public SaveFileDialog savefile_dialog { get; set; }
 
         //file path variable
-        public string file_Path { get; }
+        public string file_Path { get; set; }
 
         //message box buttons
         public MessageBoxButtons Buttons { get; set; }
@@ -61,56 +77,94 @@ namespace Notepad
 
 
         //downloads folder path
-        public string downloads = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
+        public static string Downloads =
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
 
-            // files modified class 
-        public FilesModified files_Modified = new FilesModified();
-        
-        
-        
+        // files modified class 
+        // public static FilesModified files_Modified = new FilesModified();
+
+
+
 
         public void OpenFile_OnClick(object sender, RoutedEventArgs e)
         {
-            /*var files_Modified = new FilesModified();*/
-           
-           
+            Buttons = MessageBoxButtons.YesNoCancel;
+            String Caption = "Do you wish to save current file before opening another file";
+            DialogResult Result;
+            Result = System.Windows.Forms.MessageBox.Show(Caption, String.Empty, Buttons);
+            Convert.ToBoolean(Result);
+
+
             
-            openfile_dialog = new OpenFileDialog();
-            var file_type = string.Empty;
-            openfile_dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
-            if (openfile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            switch (Result)
             {
+                case System.Windows.Forms.DialogResult.Yes:
+                    MessageBox.Show(Caption);
+                    if (!File.Exists(file_Path))
+                    {
+                        var savefile_dialog_new_path = new SaveFileDialog();
+                        string new_File_Path = savefile_dialog_new_path.FileName;
+                        savefile_dialog_new_path.Title = "Save As";
+                        savefile_dialog_new_path.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                        savefile_dialog_new_path.InitialDirectory = Downloads;
+                        savefile_dialog_new_path.AddExtension = true;
+                        if (savefile_dialog_new_path.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            using (streamWriter = new StreamWriter(savefile_dialog_new_path.FileName))
+                            {
+                                streamWriter.Write(Textbox_Main.Text);
+                                MessageBox.Show("File Saved", new_File_Path);
+                                //Textblock_File_Path.Text = Path.GetFullPath(file_Path);
+                                Textblock_File_Type.Text = Path.GetExtension(file_Path);
 
-                var file_Path = openfile_dialog.FileName;
-                file_type = Path.GetExtension(file_Path);
-                var file_Stream = openfile_dialog.OpenFile();
+                            }
 
+                        }
+                    }
 
+                    if (File.Exists(file_Path))
+                        {
+                            using (streamWriter = new StreamWriter(file_Path))
+                            {
+                                streamWriter.Write(Textbox_Main.Text);
+                                MessageBox.Show("File Saved", file_Path);
 
+                            }
+                    
+                    
+                    
+                            }
+                    
+                    //open file a after saving
+                    var Open_file_after_saving = new OpenFileDialog();
+                    Open_file_after_saving.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                    if (Open_file_after_saving.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        using (streamReader = new StreamReader(Open_file_after_saving.FileName))
+                        {
+                            Textbox_Main.Text = streamReader.ReadToEnd();
+                            file_Path = Open_file_after_saving.FileName;
+                            Textblock_File_Path.Text = file_Path;
+                            Textblock_File_Type.Text = Path.GetExtension(file_Path);
 
-                using (StreamReader reader = new StreamReader(file_Stream))
-                {
-                    Textbox_Main.Text = reader.ReadToEnd(); //display file in text
-                    Textblock_File_Path.Text = file_Path; //display file path
-                    Textblock_File_Type.Text = file_type;
-
-
-
-                }
-
-
-
-
+                        }
+                    }
+                   
+                    
+                    break;
+                case System.Windows.Forms.DialogResult.No:
+                    //opem file anyway
+                    //do nothing 
+                    
+                    break;
             }
-            else if (openfile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                files_Modified.Prompt_save_when_Open_New_File_when_file_is_Already_Open();
-            }
+
 
         }
+    
 
-        public void Save_OnClick(object sender, RoutedEventArgs e)
+public void Save_OnClick(object sender, RoutedEventArgs e)
         {
 
             {
@@ -119,7 +173,7 @@ namespace Notepad
                 DialogResult Result;
                 Result = System.Windows.Forms.MessageBox.Show(caption, String.Empty, Buttons);
                 Convert.ToBoolean(Result);
-                
+
                 switch (Result)
                 {
                     case System.Windows.Forms.DialogResult.Yes:
@@ -128,13 +182,13 @@ namespace Notepad
                             //save exisiting file
                             if (File.Exists(file_Path))
                             {
-                              using (streamWriter = new StreamWriter(file_Path))
+                                using (streamWriter = new StreamWriter(file_Path))
                                 {
                                     streamWriter.Write(Textbox_Main.Text);
                                     MessageBox.Show("File Saved", file_Path);
-                                    
+
                                 }
-                                
+
                                 /*File.WriteAllText(Path.GetFullPath(file_Path), Textbox_Main.Text);
                                 MessageBox.Show("File Saved", file_Path);*/
 
@@ -144,28 +198,30 @@ namespace Notepad
                             {
                                 var savefile_dialog_new_path = new SaveFileDialog();
                                 string new_File_Path = savefile_dialog_new_path.FileName;
-                                savefile_dialog.Title = "Save As";
-                                savefile_dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                                savefile_dialog.InitialDirectory = downloads;
-                                savefile_dialog.AddExtension = true;
-                                if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                                savefile_dialog_new_path.Title = "Save As";
+                                savefile_dialog_new_path.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                                savefile_dialog_new_path.InitialDirectory = Downloads;
+                                savefile_dialog_new_path.AddExtension = true;
+                                if (savefile_dialog_new_path.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                                 {
-                                    using (streamWriter = new StreamWriter(savefile_dialog.FileName))
+                                    using (streamWriter = new StreamWriter(savefile_dialog_new_path.FileName))
                                     {
                                         streamWriter.Write(Textbox_Main.Text);
                                         MessageBox.Show("File Saved", new_File_Path);
-                                        
+                                        //Textblock_File_Path.Text = Path.GetFullPath(file_Path);
+                                        Textblock_File_Type.Text = Path.GetExtension(file_Path);
+
                                     }
 
                                 }
 
                             }
                         }
-                        
-                        
-                     
-                        
-                        
+
+
+
+
+
                         catch (Exception exception)
                         {
                             Console.WriteLine(exception);
@@ -175,7 +231,7 @@ namespace Notepad
                         break;
 
                     case System.Windows.Forms.DialogResult.No:
-                        
+
 
                         break;
                     case System.Windows.Forms.DialogResult.Cancel:
@@ -189,19 +245,19 @@ namespace Notepad
 
         private void Save_As_OnClick(object sender, RoutedEventArgs e)
         {
-          
-          //same function as save
-        savefile_dialog.Filter = "Text Files (*.txt)|*.txt|All files (*.*)|*.*";
-        savefile_dialog.CreatePrompt = true;
 
-        if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        {
-            
-            
-            
-        }
+            //same function as save
+            savefile_dialog.Filter = "Text Files (*.txt)|*.txt|All files (*.*)|*.*";
+            savefile_dialog.CreatePrompt = true;
 
-     
+            if (savefile_dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+
+
+
+            }
+
+
 
 
 
@@ -261,7 +317,7 @@ namespace Notepad
                                     streamWriter.Close();
                                     MessageBox.Show("File Saved", file_Path);
                                 }
-                               
+
 
                             }
                             //create new file
@@ -311,7 +367,7 @@ namespace Notepad
 
         private void Time_Date_Stamp_OnClick(object sender, RoutedEventArgs e)
         {
-       
+
 
             /*// if (Keyboard.IsKeyDown(Key.Return)
             {
@@ -321,26 +377,38 @@ namespace Notepad
 
         }
 
-
-
-
-
         private void Change_Font_OnClick(object sender, RoutedEventArgs e)
 
-            {
+        {
 
 
-               
 
 
-            }
-
-            private void New_OnClick(object sender, RoutedEventArgs e)
-            {
-
-
-            }
 
         }
-    }
+
+        private void New_OnClick(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+
+        private void Textbox_Main_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+                //event handler to check if the text has been modified
+            if (ismodified)
+            {
+
+                ismodified = true;
+            }
+            else if (!ismodified)
+            {
+                ismodified = false;
+            }
+        }
+
+       
     
+    }
+}

@@ -33,9 +33,9 @@
 
         </Menu>
         <!--<ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/> -->
-        <TextBox x:Name="Textbox_Main" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Text="" Margin="10,51,19,19"  VerticalScrollBarVisibility="Visible"/>
+        <TextBox x:Name="Textbox_Main" TextChanged="Textbox_Main_OnTextChanged" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Text="" Margin="10,51,19,19"  VerticalScrollBarVisibility="Visible"/>
 
-
+    
 
     </Grid>
 
