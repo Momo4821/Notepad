@@ -1,14 +1,15 @@
 ﻿using System.Drawing.Printing;
 using System.IO;
-using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-//using Notepad.KeyPressed;
-
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
+using System.Drawing;
+using System.Net.Mime;
+using FontFamily = System.Windows.Media.FontFamily;
+using RichTextBox = System.Windows.Controls.RichTextBox;
 using TextBox = System.Windows.Controls.TextBox;
 
 namespace Notepad;
@@ -23,20 +24,20 @@ namespace Notepad;
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     public MainWindow()
     {
         InitializeComponent();
-        
-        
+
+
         // Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
         // event handler to check if the text has been modified
     }
 
 
-    
-  
+
+
     public bool ismodified { get; set; }
 
 
@@ -59,12 +60,13 @@ public partial class MainWindow : Window
 
 
     //downloads folder path
-    public static string Downloads =
+    public string Downloads =
         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
 
 
-    
-    
+
+
+
     public void OpenFile_OnClick(object sender, RoutedEventArgs e)
     {
         Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
@@ -124,17 +126,17 @@ public partial class MainWindow : Window
                 {
                     using (streamReader = new StreamReader(openfileDialog.FileName))
                     {
-                        
+
                         Textbox_Main.Text = streamReader.ReadToEnd();
-                        file_Path = openfileDialog .FileName;
+                        file_Path = openfileDialog.FileName;
                         Textblock_File_Path.Text = file_Path;
                         Textblock_File_Type.Text = Path.GetExtension(file_Path);
-                        
+
                     }
-                    
-                    
-                    
-                    
+
+
+
+
                 }
 
                 break;
@@ -162,16 +164,16 @@ public partial class MainWindow : Window
                         //save exisiting file
                         if (File.Exists(file_Path))
                         {
-                          
+
                             Textblock_File_Path.Text = file_Path.ToString();
                             using (streamWriter = new StreamWriter(file_Path))
                             {
                                 streamWriter.Write(Textbox_Main.Text);
                                 MessageBox.Show("File Saved", file_Path);
                                 
-                                
+
                             }
-                                
+
                             /*File.WriteAllText(Path.GetFullPath(file_Path), Textbox_Main.Text);
                             MessageBox.Show("File Saved", file_Path);*/
                         }
@@ -281,8 +283,7 @@ public partial class MainWindow : Window
                         //create new file
                         else if (!File.Exists(file_Path))
                         {
-                            var savefile_dialog_new_path = new SaveFileDialog();
-                            var new_File_Path = savefile_dialog_new_path.FileName;
+                            file_Path = SavefileDialog.FileName;
                             SavefileDialog = new SaveFileDialog();
                             SavefileDialog.Title = "Save As";
                             SavefileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -293,7 +294,7 @@ public partial class MainWindow : Window
                                 {
                                     streamWriter.Write(Textbox_Main.Text);
                                     streamWriter.Close();
-                                    MessageBox.Show("File Saved", new_File_Path);
+                                    MessageBox.Show("File Saved", file_Path);
                                     Close();
                                 }
                         }
@@ -307,7 +308,13 @@ public partial class MainWindow : Window
                     break;
 
                 case System.Windows.Forms.DialogResult.No:
-                    Close();
+                    using (streamReader = new StreamReader(Textbox_Main.Text))
+                    {
+
+                        streamReader.Dispose();
+
+                    }
+                    
 
                     break;
                 case System.Windows.Forms.DialogResult.Cancel:
@@ -316,24 +323,44 @@ public partial class MainWindow : Window
         }
     }
 
-    
+
     private void Time_Date_Stamp_OnClick(object sender, RoutedEventArgs e)
     {
-   
-        
+
+
         var create_date_Time
-            = DateTime.Now.ToLongDateString() + "\n";
+            = DateTime.Now.ToLongDateString() + Environment.NewLine;
         Textbox_Main.AppendText(create_date_Time);
 
-       
+
 
     }
 
-    
 
+      
     private void Change_Font_OnClick(object sender, RoutedEventArgs e)
-
     {
+        var _chose_font = new FontDialog();
+        _chose_font.ShowColor = true;
+        _chose_font.ShowApply = true;
+        _chose_font.ShowHelp = true;
+        _chose_font.MinSize = 20;
+        
+        if (_chose_font.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+
+        {
+
+
+            
+            var font_color  = new Color();
+
+            Textbox_Main.FontSize = _chose_font.Font.Size;
+            Textbox_Main.FontFamily = new FontFamily(_chose_font.Font.FontFamily.Name);
+            _chose_font.Color.Name = Textbox_Main.Foreground.
+
+
+        }
+
     }
 
     private void New_OnClick(object sender, RoutedEventArgs e)
@@ -348,15 +375,44 @@ public partial class MainWindow : Window
         switch (Result)
         {
 
-        case System.Windows.Forms.DialogResult.Yes:
-            
-            if(File.Exists(file_Path))
-            if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                using (streamWriter)
+            case System.Windows.Forms.DialogResult.Yes:
+
+                if (File.Exists(file_Path))
                 {
+                    if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        using (streamWriter = new StreamWriter(file_Path))
+                        {
                             streamWriter.Write(Textbox_Main.Text);
                             MessageBox.Show("File Saved");
+
+                        }
+
+
+
+                    }
+
+                }
+                else if (!File.Exists(file_Path))
+                {
+                    //var savefile_dialog_new_path = new SaveFileDialog();
+                    // var new_File_Path = savefile_dialog_new_path.FileName;
+                    file_Path = SavefileDialog.FileName;
+                    SavefileDialog = new SaveFileDialog();
+                    SavefileDialog.Title = "Save As";
+                    SavefileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                    SavefileDialog.AddExtension = true;
+                    SavefileDialog.FileName = "Untitled";
+                    if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        using (streamWriter = new StreamWriter(SavefileDialog.FileName))
+                        {
+                            streamWriter.Write(Textbox_Main.Text);
+                            streamWriter.Close();
+                            MessageBox.Show("File Saved", file_Path);
+
+                        }
+
+
 
 
 
@@ -364,47 +420,83 @@ public partial class MainWindow : Window
 
 
 
-            }
-          
-            
-            
-            
-            
-            break;
-        case System.Windows.Forms.DialogResult.No:
-        // directories
-
-
-
-
-
                 break;
-        case System.Windows.Forms.DialogResult.Cancel:
-            
-            //do nothing
-            break;
+            case System.Windows.Forms.DialogResult.No:
+                var search_folder = new FolderBrowserDialog();
+                Textbox_Main.Clear();
+                Textblock_File_Path.Text = string.Empty;
+                Textblock_File_Type.Text = string.Empty;
+
+                if (search_folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    var savefile = new SaveFileDialog();
+                    search_folder.SelectedPath = search_folder.SelectedPath;
+                    
+                    
+                    savefile.FileName = "Untitled";
+                    savefile.AddExtension = true;
+                    savefile.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                     if (savefile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                         
+                                    {
+
+                                        using (streamWriter = new StreamWriter(savefile.FileName))
+                                        {
+                                            
+                                            streamWriter.Write(Textbox_Main.Text);
+                                            Textblock_File_Path.Text = search_folder.SelectedPath;
+                                            Textblock_File_Type.Text = Path.GetExtension(savefile.FileName);
+                                            MessageBox.Show("File Created",search_folder.SelectedPath );
+                                            
+                                        }
+                                        /*using (FileStream fs = new FileStream(search_folder.SelectedPath, FileMode.CreateNew))
+                                        {
+                                          
+                                            byte[] info = new UTF8Encoding(true).GetBytes(Textbox_Main.Text);
+                                            // Add some information to the file.
+                                            fs.Write(info, 0, info.Length);
+                                            Textblock_File_Path.Text = search_folder.SelectedPath;
+                                            Textblock_File_Type.Text = Path.GetExtension(search_folder.SelectedPath);
+                                            MessageBox.Show("File Created",search_folder.SelectedPath );
+                                        }*/
+                                             
+                                             
+                                    }
+                }
+                
+               
+                
+               
+                
+                
+                    
+                break;
+            case System.Windows.Forms.DialogResult.Cancel:
+
+                //do nothing
+                break;
+
+
+
+
 
         }
-        
-        
-        
+
+
     }
 
-
-    
-    
     private void Textbox_Main_OnTextChanged(object sender, TextChangedEventArgs e)
     {
         //event handler to check if the text has been modified
-        if 
-            
-            
+        if
+
+
             (ismodified)
             ismodified = true;
-        
-        
-        else if 
-            
+
+
+        else if
+
             (!ismodified) ismodified = false;
     }
 
@@ -417,26 +509,51 @@ public partial class MainWindow : Window
         // F5 Key Pressed - Insert Date and Time
         if (Key_f5_Pressed)
         {
-            
-            Textbox_Main.AppendText(create_date_Time);
 
+            Textbox_Main.AppendText(create_date_Time);
+            
         }
 
 
-        
-        
+        bool Key_f6_Pressed = Keyboard.IsKeyDown(Key.F6);
+
+        if (Key_f6_Pressed)
+        {
+            char format = '•';
+            Textbox_Main.TextWrapping = TextWrapping.Wrap;
+            
 
 
-
-
-
-
+        }
 
 
 
 
     }
+
+    private void Format_OnClick(object sender, RoutedEventArgs e)
+    {
+        char format = '•';
+        // Convert.ToString(format + "\n" );
+
+
+
+        Textbox_Main.TextWrapping = TextWrapping.Wrap;
+        Textbox_Main.AppendText(format + "\n");
+
+
+    }
+
+
+    
+
+    
 }
+
+
+
+
+    
 
 
 
