@@ -33,7 +33,7 @@
         </Menu>
         <!--<ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/> -->
         <TextBox x:Name="Textbox_Main" TextChanged="Textbox_Main_OnTextChanged" TextWrapping="Wrap" AcceptsReturn="True" Text="" AcceptsTab="True" Margin="10,51,19,19"  
-                  VerticalScrollBarVisibility="Visible" KeyDown="Textbox_Main_OnKeyDown" Padding="10px"/>
+                  VerticalScrollBarVisibility="Visible" KeyDown="Textbox_Main_OnKeyDown" Padding="10px" FontFamily="Times New Roman" FontSize="20" IsReadOnly="False"/>
 
     
 

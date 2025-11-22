@@ -1,16 +1,16 @@
-﻿using System.Drawing.Printing;
+﻿using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
+using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using Color = System.Drawing.Color;
+using FontFamily = System.Windows.Media.FontFamily;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
-using System.Drawing;
-using System.Net.Mime;
-using FontFamily = System.Windows.Media.FontFamily;
-using RichTextBox = System.Windows.Controls.RichTextBox;
-using TextBox = System.Windows.Controls.TextBox;
 
 namespace Notepad;
 
@@ -60,8 +60,7 @@ public partial class MainWindow
 
 
     //downloads folder path
-    public string Downloads =
-        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
+   public string Downloads =Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
 
 
 
@@ -218,22 +217,61 @@ public partial class MainWindow
 
     private void Save_As_OnClick(object sender, RoutedEventArgs e)
     {
-        Buttons = MessageBoxButtons.YesNoCancel;
-        var caption_save_as = "Do you wish to save the file As?";
-        DialogResult Result;
-        Result = System.Windows.Forms.MessageBox.Show(caption_save_as, string.Empty, Buttons);
-        Convert.ToBoolean(Result);
+        /*   Buttons = MessageBoxButtons.YesNoCancel;
+           var caption_save_as = "Do you wish to save the file As?";
+           DialogResult Result;
+           Result = System.Windows.Forms.MessageBox.Show(caption_save_as, string.Empty, Buttons);
+           Convert.ToBoolean(Result);
 
 
-        switch (Result)
+           switch (Result)
+           {
+               case System.Windows.Forms.DialogResult.Yes:
+
+                   break;
+           }
+
+
+           //same function save as method but always creates a new file*/
+
+
+        try
         {
-            case System.Windows.Forms.DialogResult.Yes:
-
-                break;
+            //save exisiting file
+            if (File.Exists(file_Path))
+            {
+                using (streamWriter = new StreamWriter(file_Path))
+                {
+                    streamWriter.Write(Textbox_Main.Text);
+                    streamWriter.Close();
+                    MessageBox.Show("File Saved", file_Path);
+                }
+            }
+            //create new file
+            else if (!File.Exists(file_Path))
+            {
+                file_Path = SavefileDialog.FileName;
+                SavefileDialog = new SaveFileDialog();
+                SavefileDialog.Title = "Save As";
+                SavefileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                SavefileDialog.AddExtension = true;
+                SavefileDialog.FileName = "Untitled";
+                if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    using (streamWriter = new StreamWriter(SavefileDialog.FileName))
+                    {
+                        streamWriter.Write(Textbox_Main.Text);
+                        streamWriter.Close();
+                        MessageBox.Show("File Saved", file_Path);
+                        Close();
+                    }
+            }
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+            throw;
         }
 
-
-        //same function save as method but always creates a new file
     }
 
 
@@ -345,23 +383,39 @@ public partial class MainWindow
         _chose_font.ShowApply = true;
         _chose_font.ShowHelp = true;
         _chose_font.MinSize = 20;
-        
+
+
+
         if (_chose_font.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 
         {
 
 
-            
-            var font_color  = new Color();
+            // var color_convert = new SolidBrush(Color.FromArgb(_chose_font.Color.A, _chose_font.Color.R, _chose_font.Color.G, _chose_font.Color.B));
+            Textbox_Main.Foreground = new SolidColorBrush(){Color = System.Windows.Media.Color.FromArgb(_chose_font.Color.A, _chose_font.Color.R, _chose_font.Color.G, _chose_font.Color.B)};
 
-            Textbox_Main.FontSize = _chose_font.Font.Size;
-            Textbox_Main.FontFamily = new FontFamily(_chose_font.Font.FontFamily.Name);
-            _chose_font.Color.Name = Textbox_Main.Foreground.
+            Textbox_Main.FontFamily = new FontFamily(_chose_font.Font.Name); // font family of text font
+            Textbox_Main.FontSize = _chose_font.Font.Size; // size of font
+            Textbox_Main.FontWeight = (_chose_font.Font.Bold ? FontWeights.Bold : FontWeights.Regular);
+            Textbox_Main.Effect =
+            // bold or regular font weight
+            /*//different way to change text color from github copilot
+            var dsrawing = _chose_font.Color;
+            var mediaColor = System.Windows.Media.Color.FromArgb(dsrawing.A, dsrawing.R, dsrawing.G, dsrawing.B);
+            Textbox_Main.Foreground = new System.Windows.Media.SolidColorBrush(mediaColor);*/
 
+
+
+            // 
 
         }
 
+
+
+
     }
+
+    
 
     private void New_OnClick(object sender, RoutedEventArgs e)
     {
