@@ -4,13 +4,18 @@ using System.IO;
 using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Color = System.Drawing.Color;
 using FontFamily = System.Windows.Media.FontFamily;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
+using PrintDialog = System.Windows.Controls.PrintDialog;
+using TextBox = System.Windows.Controls.TextBox;
+using WebBrowser = System.Windows.Controls.WebBrowser;
 
 namespace Notepad;
 
@@ -154,7 +159,6 @@ public partial class MainWindow
             DialogResult Result;
             Result = System.Windows.Forms.MessageBox.Show(caption, string.Empty, Buttons);
             Convert.ToBoolean(Result);
-
             switch (Result)
             {
                 case System.Windows.Forms.DialogResult.Yes:
@@ -256,6 +260,7 @@ public partial class MainWindow
                 SavefileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 SavefileDialog.AddExtension = true;
                 SavefileDialog.FileName = "Untitled";
+                SavefileDialog.InitialDirectory = Downloads;
                 if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     using (streamWriter = new StreamWriter(SavefileDialog.FileName))
                     {
@@ -277,20 +282,44 @@ public partial class MainWindow
 
     private void Print_OnClick(object sender, RoutedEventArgs e)
     {
-        //THIS WILL PRINT THE OPEN DOCUMENT TO  A CONNECTED PRINTER
 
-        OpenfileDialog = new OpenFileDialog();
-        var file_type = string.Empty;
-        OpenfileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-        if (OpenfileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            using (var rw = new StreamReader(OpenfileDialog.FileName))
-            {
-                var p = new PrintDocument();
-                p.DefaultPageSettings.Landscape = true;
-                p.DefaultPageSettings.Color = false;
-                p.DocumentName = OpenfileDialog.FileName;
-                Print.IsSubmenuOpen = true;
-            }
+        Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
+
+        var printdialog = new PrintDialog();
+        var printdocument = new PrintDocument();
+        var printersettings = new PrinterSettings();
+
+        printdialog.CurrentPageEnabled = true;
+       // printdocument.PrinterSettings = printersettings;
+        if (printdialog.ShowDialog() == true)
+        {
+
+            Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+
+
+
+            Textbox_Main.BorderThickness = new Thickness(0);
+
+
+            printdialog.PrintVisual(Textbox_Main, "Printing Page");
+
+
+
+    
+
+        }
+
+
+        Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
+        Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        Textbox_Main.BorderThickness = new Thickness(default);
+
+
+
+
+
+
     }
 
     private void Exit_OnClick(object sender, RoutedEventArgs e)
@@ -393,11 +422,15 @@ public partial class MainWindow
 
             // var color_convert = new SolidBrush(Color.FromArgb(_chose_font.Color.A, _chose_font.Color.R, _chose_font.Color.G, _chose_font.Color.B));
             Textbox_Main.Foreground = new SolidColorBrush(){Color = System.Windows.Media.Color.FromArgb(_chose_font.Color.A, _chose_font.Color.R, _chose_font.Color.G, _chose_font.Color.B)};
-
             Textbox_Main.FontFamily = new FontFamily(_chose_font.Font.Name); // font family of text font
             Textbox_Main.FontSize = _chose_font.Font.Size; // size of font
-            Textbox_Main.FontWeight = (_chose_font.Font.Bold ? FontWeights.Bold : FontWeights.Regular);
-            Textbox_Main.Effect =
+            Textbox_Main.FontWeight = _chose_font.Font.Bold ? FontWeights.Bold : FontWeights.Regular;
+            Textbox_Main.FontStyle = _chose_font.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
+            Textbox_Main.TextDecorations = _chose_font.Font.Strikeout ? TextDecorations.Strikethrough : TextDecorations.Baseline;
+            Textbox_Main.TextDecorations =
+                _chose_font.Font.Underline ? TextDecorations.Underline : TextDecorations.Baseline;
+      ;
+                
             // bold or regular font weight
             /*//different way to change text color from github copilot
             var dsrawing = _chose_font.Color;
@@ -475,7 +508,7 @@ public partial class MainWindow
 
 
                 break;
-            case System.Windows.Forms.DialogResult.No:
+            case System.Windows.Forms.DialogResult.No: 
                 var search_folder = new FolderBrowserDialog();
                 Textbox_Main.Clear();
                 Textblock_File_Path.Text = string.Empty;
