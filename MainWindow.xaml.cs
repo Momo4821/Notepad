@@ -423,9 +423,9 @@ public partial class MainWindow
             // var color_convert = new SolidBrush(Color.FromArgb(_chose_font.Color.A, _chose_font.Color.R, _chose_font.Color.G, _chose_font.Color.B));
             Textbox_Main.Foreground = new SolidColorBrush(){Color = System.Windows.Media.Color.FromArgb(_chose_font.Color.A, _chose_font.Color.R, _chose_font.Color.G, _chose_font.Color.B)};
             Textbox_Main.FontFamily = new FontFamily(_chose_font.Font.Name); // font family of text font
-            Textbox_Main.FontSize = _chose_font.Font.Size; // size of font
+            Textbox_Main.FontSize = _chose_font.Font.Size; // size of font3
             Textbox_Main.FontWeight = _chose_font.Font.Bold ? FontWeights.Bold : FontWeights.Regular;
-            Textbox_Main.FontStyle = _chose_font.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
+            Textbox_Main.FontStyle = _chose_font.Font.Italic ? FontStyles.Italic : FontStyles.Normal; // ten
             Textbox_Main.TextDecorations = _chose_font.Font.Strikeout ? TextDecorations.Strikethrough : TextDecorations.Baseline;
             Textbox_Main.TextDecorations =
                 _chose_font.Font.Underline ? TextDecorations.Underline : TextDecorations.Baseline;
