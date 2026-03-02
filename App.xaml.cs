@@ -20,7 +20,18 @@ namespace Notepad
             window1.Show();
         }
         
+private void theme_changed(object sender, System.EventArgs e)
+        {
+            // Code to handle theme change
+        }
 
+
+
+
+        
+        
+        
+        
 
     }
 
