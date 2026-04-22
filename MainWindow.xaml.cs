@@ -1,12 +1,10 @@
-﻿using System;
-using System.Drawing;
+﻿﻿using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -45,9 +43,10 @@ public partial class MainWindow
 
 
 
-    public bool ismodified { get; set; }
+    
 
 
+    /*
     //file stream variable
     public FileStream file_Stream { get; set; }
 
@@ -63,11 +62,13 @@ public partial class MainWindow
 
     //stream reader and writer
     public StreamWriter streamWriter { get; set; }
-    public StreamReader streamReader { get; set; }
+    public StreamReader streamReader { get; set; }*/
 
 
     //downloads folder path
+   /*
    public string Downloads =Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
+   */
 
 
 
@@ -133,7 +134,24 @@ public partial class MainWindow
                     using (streamReader = new StreamReader(openfileDialog.FileName))
                     {
 
-         ------------------------------------------------------------------------------    }
+                        Textbox_Main.Text = streamReader.ReadToEnd();
+                        file_Path = openfileDialog.FileName;
+                        Textblock_File_Path.Text = file_Path;
+                        Textblock_File_Type.Text = Path.GetExtension(file_Path);
+
+                    }
+
+
+
+
+                }
+
+                break;
+
+            case System.Windows.Forms.DialogResult.Cancel:
+                break;
+        }
+    }
 
 
     public void Save_OnClick(object sender, RoutedEventArgs e)
@@ -626,6 +644,3 @@ public partial class MainWindow
 
 
     
-
-
-

@@ -23,7 +23,7 @@
                 <MenuItem Header="Time_dateStamp" x:Name="Time_DateStamp" Click="Time_Date_Stamp_OnClick"></MenuItem>
                 <MenuItem Header="Format" x:Name="Format" Click="Format_OnClick"></MenuItem>
             </MenuItem>
-
+6
             <MenuItem Header="Exit" Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
             <TextBlock x:Name="Textblock_File_Path" TextWrapping="Wrap" Text="" Height="17" Width="347" />
             <TextBlock x:Name="Textblock_File_Type" TextWrapping="Wrap" Text="" Height="17" Width="294"/>
