@@ -133,24 +133,7 @@ public partial class MainWindow
                     using (streamReader = new StreamReader(openfileDialog.FileName))
                     {
 
-                        Textbox_Main.Text = streamReader.ReadToEnd();
-                        file_Path = openfileDialog.FileName;
-                        Textblock_File_Path.Text = file_Path;
-                        Textblock_File_Type.Text = Path.GetExtension(file_Path);
-
-                    }
-
-
-
-
-                }
-
-                break;
-
-            case System.Windows.Forms.DialogResult.Cancel:
-                break;
-        }
-    }
+         ------------------------------------------------------------------------------    }
 
 
     public void Save_OnClick(object sender, RoutedEventArgs e)
