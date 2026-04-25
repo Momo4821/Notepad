@@ -1,79 +1,151 @@
 ﻿using System.IO;
+using System.Windows.Forms.VisualStyles;
 using Notepad.Functions;
 using static Notepad.MainWindow;
 
 
 namespace Notepad;
 
-public class Methods
-{
+public  class Methods 
+{ 
+        
+        private MainWindow _mainWindow;
+        private Datatypes _datatypes;
     
-    MainWindow MainWindow;
-    Datatypes _Datatypes;
-    
-    
-    public void Openfile ()
+    public Methods(MainWindow mainWindow)
     {
-        
-        _Datatypes = new Datatypes();
+        _mainWindow = mainWindow;
+        _datatypes = new Datatypes();
+    }
+   
 
-        var Caption = "Do you wish to save current file before opening another file";
-        var openfile_messagebox = new  MessageBoxButtons();
-        DialogResult Result;
-        Result = System.Windows.Forms.MessageBox.Show(Caption, string.Empty, openfile_messagebox);
-        Convert.ToBoolean(Result);
-        
-        
-        
-        var savefiledialog = new SaveFileDialog();
-        _Datatypes._Filepath = savefiledialog.FileName;
-        switch(Result)
-        {
-            case DialogResult.Yes:
-                if (!File.Exists(_Datatypes._Filepath) && savefiledialog.ShowDialog() == DialogResult.OK )
+
+    public void Openfile ()
+   {
+    
+      
+
+      string caption = "Do you wish to save the current file before opening a new one";
+      var openfilemessagebox = MessageBoxButtons.YesNoCancel;
+      DialogResult Result;
+      Result = MessageBox.Show(caption, string.Empty, openfilemessagebox);
+       Convert.ToBoolean(Result);
+       var savefiledialog = new SaveFileDialog();
+       var openfiledialog = new OpenFileDialog();
+       
+       
+       
+      switch (Result)
+      {
+        case DialogResult.Yes:
+            MessageBox.Show(caption);
+            if (!File.Exists(_datatypes._Filepath) && savefiledialog.ShowDialog() == DialogResult.OK)
+            {
+              
+              savefiledialog.Title = "Save File";
+              savefiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+              savefiledialog.InitialDirectory = _datatypes._Downloads;
+              savefiledialog.RestoreDirectory = true;
+              savefiledialog.AddExtension = true;
+              savefiledialog.DefaultExt = ".txt";
+              
+                  using(StreamWriter sw = new StreamWriter(_datatypes._Filepath))
+                  {
+                      sw.Write(_mainWindow.Textbox_Main.Text);
+                      MessageBox.Show("File Saved");
+                      
+                  }
+            }
+
+            if (File.Exists(_datatypes._Filepath))
+            {
+
+                using (StreamWriter sw = new StreamWriter(_datatypes._Filepath))
                 {
-                    savefiledialog.Title = "Save";
-                    savefiledialog.FileName = "Untitled";
-                    savefiledialog.InitialDirectory = _Datatypes._Downloads;
-                    savefiledialog.DefaultExt = "txt";
-                    savefiledialog.AddExtension = true;
                     
-                    using (StreamWriter sw = new StreamWriter(savefiledialog.FileName))
-                    {
-                        sw.Write(MainWindow.Textbox_Main);
-                        MessageBox.Show("File Save", _Datatypes._Filepath);
-                        MainWindow.Textblock_File_Type.Text = Path.GetExtension(_Datatypes._Filepath);
-                    }
-                }
-                else if(File.Exists(_Datatypes._Filepath))
-                {
-                    using (StreamWriter sw = new StreamWriter(_Datatypes._Filepath))
-                    {
-                        sw.Write(MainWindow.Textbox_Main.Text);
-                        MessageBox.Show("File Save", _Datatypes._Filepath);
-                    }
-                    
+                    sw.Write(_mainWindow.Textbox_Main.Text);
+                    MessageBox.Show("File Saved", _datatypes._Filepath);
                     
                 }
                 
                 //open file after saving
-                var openfiledialog = new OpenFileDialog();
-                openfiledialog.Title = "Open";
+                openfiledialog.Title = "Open File";
+                openfiledialog.InitialDirectory = _datatypes._Downloads;
+                openfiledialog.RestoreDirectory = true;
+                openfiledialog.DefaultExt = ".txt";
                 openfiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                openfiledialog.InitialDirectory = _Datatypes._Downloads;
-                openfiledialog.DefaultExt = "txt";
+
+                if (openfiledialog.ShowDialog() == DialogResult.OK)
+                {
+                
+                    var filestream = openfiledialog.OpenFile();
+                    
+                    using (StreamReader sr = new StreamReader(filestream))
+                    {
+                        
+
+
+                        _datatypes._Filepath = openfiledialog.FileName;
+                        _mainWindow.Textblock_File_Path.Text = _datatypes._Filepath;
+                        _mainWindow.Textblock_File_Type.Text = Path.GetExtension(_datatypes._Filepath);
+                        
+                    }
+                    
+                    
+                }
                 
                 
                 
                 
-                break;
-            case DialogResult.No:
-                break;
-            case DialogResult.Cancel:
-                break;
-                
-    }         
+            }
+            
+            
+            break;
+          case DialogResult.No:
+              if (openfiledialog.ShowDialog() == DialogResult.OK)
+              {
+                  
+                  
+                  using StreamReader sr = new StreamReader(openfiledialog.OpenFile());
+                 _mainWindow.Textbox_Main.Text = sr.ReadToEnd();
+                 _datatypes._Filepath = openfiledialog.FileName;
+                 _mainWindow.Textblock_File_Path.Text = _datatypes._Filepath;
+                  _mainWindow.Textblock_File_Type.Text = Path.GetExtension(_datatypes._Filepath);
+              }
+              break;
+          case DialogResult.Cancel:
+              break;
+              //do nothing
+          
+          
+         
+         
+         
+      }
+      
+      
+         
+      
+      
+      
+      
+   }
+   
+
     
+    public void savefile()
+    {
+      
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
-    }
+    
+    
+}

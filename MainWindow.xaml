@@ -7,7 +7,6 @@
         Icon = "C:\Users\malan\source\repos\Notepad\Icon\Notepad_Icon.ico"
         Title="Notepad" Height="450" Width="800">
     <Grid>
-        <!--<ScrollBar HorizontalAlignment="Left" x:Name="Scrollbar_Main" Margin="773,29,0,0" VerticalAlignment="Top" RenderTransformOrigin="4.9,-1.852" Height="337"/> -->
         <Menu>
             <MenuItem Header="File">
                 <MenuItem Header="new" x:Name="New" Click="New_OnClick"> </MenuItem>
@@ -23,22 +22,18 @@
                 <MenuItem Header="Time_dateStamp" x:Name="Time_DateStamp" Click="Time_Date_Stamp_OnClick"></MenuItem>
                 <MenuItem Header="Format" x:Name="Format" Click="Format_OnClick"></MenuItem>
             </MenuItem>
-6
-            <MenuItem Header="Exit" Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
+
+            <MenuItem Header="Exit" x:Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
             <TextBlock x:Name="Textblock_File_Path" TextWrapping="Wrap" Text="" Height="17" Width="347" />
             <TextBlock x:Name="Textblock_File_Type" TextWrapping="Wrap" Text="" Height="17" Width="294"/>
 
 
 
         </Menu>
-        <!--<ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/> -->
+        
+       
         <TextBox x:Name="Textbox_Main" TextChanged="Textbox_Main_OnTextChanged" TextWrapping="Wrap" AcceptsReturn="True" Text="" AcceptsTab="True" Margin="10,51,19,19"  
-                  VerticalScrollBarVisibility="Visible" KeyDown="Textbox_Main_OnKeyDown" Padding="10px" FontFamily="Times New Roman" FontSize="20" IsReadOnly="False"/>
-
-    
-
+                  VerticalScrollBarVisibility="Visible" KeyDown="Textbox_Main_OnKeyDown" Padding="10px" FontFamily="Times New Roman" FontSize="20" IsReadOnly="False"
+               />
     </Grid>
-
-
-
 </Window>

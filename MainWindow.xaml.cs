@@ -2,12 +2,14 @@
 using System.Drawing.Printing;
 using System.IO;
 using System.Net.Mime;
+using System.Runtime.InteropServices.JavaScript;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Notepad.Functions;
 using Color = System.Drawing.Color;
 using FontFamily = System.Windows.Media.FontFamily;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -31,255 +33,32 @@ namespace Notepad;
 /// </summary>
 public partial class MainWindow
 {
-    public MainWindow()
+    private readonly Methods _methods;
+    private readonly Datatypes _datatypes;
+    public MainWindow ()
     {
         InitializeComponent();
-
-
-        // Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
-        // event handler to check if the text has been modified
+        
+        _methods = new Methods(this);
+        _datatypes = new Datatypes();
+        
     }
-
-
-
-
     
-
-
-    /*
-    //file stream variable
-    public FileStream file_Stream { get; set; }
-
-    //file dialog variables
-    public OpenFileDialog OpenfileDialog { get; set; }
-    public SaveFileDialog SavefileDialog { get; set; }
-
-    //file path variable
-    public string file_Path { get; set; }
-
-    //message box buttons
-    public MessageBoxButtons Buttons { get; set; }
-
-    //stream reader and writer
-    public StreamWriter streamWriter { get; set; }
-    public StreamReader streamReader { get; set; }*/
-
-
-    //downloads folder path
-   /*
-   public string Downloads =Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
-   */
-
-
-
-
-
     public void OpenFile_OnClick(object sender, RoutedEventArgs e)
     {
-        Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
-        Buttons = MessageBoxButtons.YesNoCancel;
-        var Caption = "Do you wish to save current file before opening another file";
-        DialogResult Result;
-        Result = System.Windows.Forms.MessageBox.Show(Caption, string.Empty, Buttons);
-        Convert.ToBoolean(Result);
-
-
-        switch (Result)
-        {
-            case System.Windows.Forms.DialogResult.Yes:
-                MessageBox.Show(Caption);
-                if (!File.Exists(file_Path))
-                {
-                    var savefile_dialog_new_path = new SaveFileDialog();
-                    var new_File_Path = savefile_dialog_new_path.FileName;
-                    savefile_dialog_new_path.Title = "Save As";
-                    savefile_dialog_new_path.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                    savefile_dialog_new_path.InitialDirectory = Downloads;
-                    savefile_dialog_new_path.AddExtension = true;
-                    if (savefile_dialog_new_path.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        using (streamWriter = new StreamWriter(savefile_dialog_new_path.FileName))
-                        {
-                            streamWriter.Write(Textbox_Main.Text);
-                            MessageBox.Show("File Saved", new_File_Path);
-                            //Textblock_File_Path.Text = Path.GetFullPath(file_Path);
-                            Textblock_File_Type.Text = Path.GetExtension(file_Path);
-                        }
-                }
-
-                if (File.Exists(file_Path))
-                    using (streamWriter = new StreamWriter(file_Path))
-                    {
-                        streamWriter.Write(Textbox_Main.Text);
-                        MessageBox.Show("File Saved", file_Path);
-                    }
-
-                //open file a after saving
-                var Open_file_after_saving = new OpenFileDialog();
-                Open_file_after_saving.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                if (Open_file_after_saving.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    using (streamReader = new StreamReader(Open_file_after_saving.FileName))
-                    {
-                        Textbox_Main.Text = streamReader.ReadToEnd();
-                        file_Path = Open_file_after_saving.FileName;
-                        Textblock_File_Path.Text = file_Path;
-                        Textblock_File_Type.Text = Path.GetExtension(file_Path);
-                    }
-
-
-                break;
-            case System.Windows.Forms.DialogResult.No:
-                var openfileDialog = new OpenFileDialog();
-                if (openfileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    using (streamReader = new StreamReader(openfileDialog.FileName))
-                    {
-
-                        Textbox_Main.Text = streamReader.ReadToEnd();
-                        file_Path = openfileDialog.FileName;
-                        Textblock_File_Path.Text = file_Path;
-                        Textblock_File_Type.Text = Path.GetExtension(file_Path);
-
-                    }
-
-
-
-
-                }
-
-                break;
-
-            case System.Windows.Forms.DialogResult.Cancel:
-                break;
-        }
+      _methods.Openfile();
+       
     }
 
 
     public void Save_OnClick(object sender, RoutedEventArgs e)
     {
-        {
-            Buttons = MessageBoxButtons.YesNoCancel;
-            var caption = "Do you wish to save the file?";
-            DialogResult Result;
-            Result = System.Windows.Forms.MessageBox.Show(caption, string.Empty, Buttons);
-            Convert.ToBoolean(Result);
-            switch (Result)
-            {
-                case System.Windows.Forms.DialogResult.Yes:
-                    try
-                    {
-                        //save exisiting file
-                        if (File.Exists(file_Path))
-                        {
-
-                            Textblock_File_Path.Text = file_Path.ToString();
-                            using (streamWriter = new StreamWriter(file_Path))
-                            {
-                                streamWriter.Write(Textbox_Main.Text);
-                                MessageBox.Show("File Saved", file_Path);
-                                
-
-                            }
-
-                            /*File.WriteAllText(Path.GetFullPath(file_Path), Textbox_Main.Text);
-                            MessageBox.Show("File Saved", file_Path);*/
-                        }
-                        //create new file
-                        else if (!File.Exists(file_Path))
-                        {
-                            var savefile_dialog_new_path = new SaveFileDialog();
-                            var new_File_Path = savefile_dialog_new_path.FileName;
-                            savefile_dialog_new_path.Title = "Save As";
-                            savefile_dialog_new_path.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                            savefile_dialog_new_path.InitialDirectory = Downloads;
-                            savefile_dialog_new_path.AddExtension = true;
-                            if (savefile_dialog_new_path.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                                using (streamWriter = new StreamWriter(savefile_dialog_new_path.FileName))
-                                {
-                                    streamWriter.Write(Textbox_Main.Text);
-                                    MessageBox.Show("File Saved", new_File_Path);
-                                    //Textblock_File_Path.Text = Path.GetFullPath(file_Path);
-                                    Textblock_File_Type.Text = Path.GetExtension(file_Path);
-                                }
-                        }
-                    }
-
-
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine(exception);
-                        throw;
-                    }
-
-                    break;
-
-                case System.Windows.Forms.DialogResult.No:
-
-
-                    break;
-                case System.Windows.Forms.DialogResult.Cancel:
-                    break;
-            }
-        }
+       
     }
 
     private void Save_As_OnClick(object sender, RoutedEventArgs e)
     {
-        /*   Buttons = MessageBoxButtons.YesNoCancel;
-           var caption_save_as = "Do you wish to save the file As?";
-           DialogResult Result;
-           Result = System.Windows.Forms.MessageBox.Show(caption_save_as, string.Empty, Buttons);
-           Convert.ToBoolean(Result);
-
-
-           switch (Result)
-           {
-               case System.Windows.Forms.DialogResult.Yes:
-
-                   break;
-           }
-
-
-           //same function save as method but always creates a new file*/
-
-
-        try
-        {
-            //save exisiting file
-            if (File.Exists(file_Path))
-            {
-                using (streamWriter = new StreamWriter(file_Path))
-                {
-                    streamWriter.Write(Textbox_Main.Text);
-                    streamWriter.Close();
-                    MessageBox.Show("File Saved", file_Path);
-                }
-            }
-            //create new file
-            else if (!File.Exists(file_Path))
-            {
-                file_Path = SavefileDialog.FileName;
-                SavefileDialog = new SaveFileDialog();
-                SavefileDialog.Title = "Save As";
-                SavefileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                SavefileDialog.AddExtension = true;
-                SavefileDialog.FileName = "Untitled";
-                SavefileDialog.InitialDirectory = Downloads;
-                if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    using (streamWriter = new StreamWriter(SavefileDialog.FileName))
-                    {
-                        streamWriter.Write(Textbox_Main.Text);
-                        streamWriter.Close();
-                        MessageBox.Show("File Saved", file_Path);
-                        Close();
-                    }
-            }
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine(exception);
-            throw;
-        }
-
+        
     }
 
 
@@ -327,70 +106,7 @@ public partial class MainWindow
 
     private void Exit_OnClick(object sender, RoutedEventArgs e)
     {
-        {
-            Buttons = MessageBoxButtons.YesNoCancel;
-            var caption = "Do you wish to save the file Before Exiting?";
-            DialogResult Result;
-            Result = System.Windows.Forms.MessageBox.Show(caption, string.Empty, Buttons);
-            Convert.ToBoolean(Result);
-
-
-            switch (Result)
-            {
-                case System.Windows.Forms.DialogResult.Yes:
-                    try
-                    {
-                        //save exisiting file
-                        if (File.Exists(file_Path))
-                        {
-                            using (streamWriter = new StreamWriter(file_Path))
-                            {
-                                streamWriter.Write(Textbox_Main.Text);
-                                streamWriter.Close();
-                                MessageBox.Show("File Saved", file_Path);
-                            }
-                        }
-                        //create new file
-                        else if (!File.Exists(file_Path))
-                        {
-                            file_Path = SavefileDialog.FileName;
-                            SavefileDialog = new SaveFileDialog();
-                            SavefileDialog.Title = "Save As";
-                            SavefileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                            SavefileDialog.AddExtension = true;
-                            SavefileDialog.FileName = "Untitled";
-                            if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                                using (streamWriter = new StreamWriter(SavefileDialog.FileName))
-                                {
-                                    streamWriter.Write(Textbox_Main.Text);
-                                    streamWriter.Close();
-                                    MessageBox.Show("File Saved", file_Path);
-                                    Close();
-                                }
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine(exception);
-                        throw;
-                    }
-
-                    break;
-
-                case System.Windows.Forms.DialogResult.No:
-                    using (streamReader = new StreamReader(Textbox_Main.Text))
-                    {
-
-                        streamReader.Dispose();
-
-                    }
-                    
-
-                    break;
-                case System.Windows.Forms.DialogResult.Cancel:
-                    break;
-            }
-        }
+       
     }
 
 
@@ -455,139 +171,28 @@ public partial class MainWindow
 
     private void New_OnClick(object sender, RoutedEventArgs e)
     {
-        Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
-        Buttons = MessageBoxButtons.YesNoCancel;
-        var Caption = "Do you wish to save current file before creating a new file";
-        DialogResult Result;
-        Result = System.Windows.Forms.MessageBox.Show(Caption, string.Empty, Buttons);
-        Convert.ToBoolean(Result);
-
-        switch (Result)
-        {
-
-            case System.Windows.Forms.DialogResult.Yes:
-
-                if (File.Exists(file_Path))
-                {
-                    if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        using (streamWriter = new StreamWriter(file_Path))
-                        {
-                            streamWriter.Write(Textbox_Main.Text);
-                            MessageBox.Show("File Saved");
-
-                        }
+        
 
 
 
-                    }
-
-                }
-                else if (!File.Exists(file_Path))
-                {
-                    //var savefile_dialog_new_path = new SaveFileDialog();
-                    // var new_File_Path = savefile_dialog_new_path.FileName;
-                    file_Path = SavefileDialog.FileName;
-                    SavefileDialog = new SaveFileDialog();
-                    SavefileDialog.Title = "Save As";
-                    SavefileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                    SavefileDialog.AddExtension = true;
-                    SavefileDialog.FileName = "Untitled";
-                    if (SavefileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        using (streamWriter = new StreamWriter(SavefileDialog.FileName))
-                        {
-                            streamWriter.Write(Textbox_Main.Text);
-                            streamWriter.Close();
-                            MessageBox.Show("File Saved", file_Path);
-
-                        }
-
-
-
-
-
-                }
-
-
-
-                break;
-            case System.Windows.Forms.DialogResult.No: 
-                var search_folder = new FolderBrowserDialog();
-                Textbox_Main.Clear();
-                Textblock_File_Path.Text = string.Empty;
-                Textblock_File_Type.Text = string.Empty;
-
-                if (search_folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    var savefile = new SaveFileDialog();
-                    search_folder.SelectedPath = search_folder.SelectedPath;
-                    
-                    
-                    savefile.FileName = "Untitled";
-                    savefile.AddExtension = true;
-                    savefile.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                     if (savefile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                         
-                                    {
-
-                                        using (streamWriter = new StreamWriter(savefile.FileName))
-                                        {
-                                            
-                                            streamWriter.Write(Textbox_Main.Text);
-                                            Textblock_File_Path.Text = search_folder.SelectedPath;
-                                            Textblock_File_Type.Text = Path.GetExtension(savefile.FileName);
-                                            MessageBox.Show("File Created",search_folder.SelectedPath );
-                                            
-                                        }
-                                        /*using (FileStream fs = new FileStream(search_folder.SelectedPath, FileMode.CreateNew))
-                                        {
-                                          
-                                            byte[] info = new UTF8Encoding(true).GetBytes(Textbox_Main.Text);
-                                            // Add some information to the file.
-                                            fs.Write(info, 0, info.Length);
-                                            Textblock_File_Path.Text = search_folder.SelectedPath;
-                                            Textblock_File_Type.Text = Path.GetExtension(search_folder.SelectedPath);
-                                            MessageBox.Show("File Created",search_folder.SelectedPath );
-                                        }*/
-                                             
-                                             
-                                    }
-                }
-                
-               
-                
-               
-                
-                
-                    
-                break;
-            case System.Windows.Forms.DialogResult.Cancel:
-
-                //do nothing
-                break;
-
-
-
-
-
-        }
-
-
+              
     }
+                
+    
 
+    
+    //don't need this since this is not b
     private void Textbox_Main_OnTextChanged(object sender, TextChangedEventArgs e)
     {
         //event handler to check if the text has been modified
-        if
-
-
-            (ismodified)
-            ismodified = true;
-
-
-        else if
-
-            (!ismodified) ismodified = false;
+      if(!_datatypes.Ismodified)
+      {
+          
+          _datatypes.Ismodified = true;
+          
+      }
+      
+      
     }
 
 
