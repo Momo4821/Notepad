@@ -1,39 +1,20 @@
-﻿﻿using System.Drawing;
-using System.Drawing.Printing;
-using System.IO;
-using System.Net.Mime;
-using System.Runtime.InteropServices.JavaScript;
+﻿using System.Drawing.Printing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Notepad.Functions;
-using Color = System.Drawing.Color;
 using FontFamily = System.Windows.Media.FontFamily;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MessageBox = System.Windows.MessageBox;
-using Path = System.IO.Path;
+
 using PrintDialog = System.Windows.Controls.PrintDialog;
-using TextBox = System.Windows.Controls.TextBox;
-using WebBrowser = System.Windows.Controls.WebBrowser;
+
 
 namespace Notepad;
 
-// private variables and methods --> modified variable only main window set it not somethign else
-// textchanged event just set to true if file is modified then call it in the openclick_method before opening a new file
-// research more about global variables in C# WPF applications
-//research summary comments
-//research event handlers not using onclick methods. 
-//run tests before pushed to git hub read about unit testing in WPF applications
-
-/// <summary>
-///     Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow
 {
-    private readonly Methods _methods;
+    private readonly Methods _methods; // create an instance of the methods class to call the methods in the methods class
     private readonly Datatypes _datatypes;
     public MainWindow ()
     {
@@ -53,18 +34,22 @@ public partial class MainWindow
 
     public void Save_OnClick(object sender, RoutedEventArgs e)
     {
-       
+     
+        _methods.Savefile();
+        
     }
 
     private void Save_As_OnClick(object sender, RoutedEventArgs e)
     {
-        
+        _methods.savefile_as();
     }
 
 
     private void Print_OnClick(object sender, RoutedEventArgs e)
     {
 
+        _methods.print();
+        
         Textbox_Main.TextChanged += Textbox_Main_OnTextChanged;
 
         var printdialog = new PrintDialog();
@@ -72,7 +57,7 @@ public partial class MainWindow
         var printersettings = new PrinterSettings();
 
         printdialog.CurrentPageEnabled = true;
-       // printdocument.PrinterSettings = printersettings;
+       
         if (printdialog.ShowDialog() == true)
         {
 
@@ -106,7 +91,7 @@ public partial class MainWindow
 
     private void Exit_OnClick(object sender, RoutedEventArgs e)
     {
-       
+       _methods.exit();
     }
 
 
@@ -126,6 +111,11 @@ public partial class MainWindow
       
     private void Change_Font_OnClick(object sender, RoutedEventArgs e)
     {
+        
+        
+        _methods.changefontsize();
+        
+        
         var _chose_font = new FontDialog();
         _chose_font.ShowColor = true;
         _chose_font.ShowApply = true;
@@ -173,7 +163,7 @@ public partial class MainWindow
     {
         
 
-
+        _methods.newfile();
 
               
     }

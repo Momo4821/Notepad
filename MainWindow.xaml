@@ -9,10 +9,10 @@
     <Grid>
         <Menu>
             <MenuItem Header="File">
-                <MenuItem Header="new" x:Name="New" Click="New_OnClick"> </MenuItem>
+                <MenuItem Header="New" x:Name="New" Click="New_OnClick"> </MenuItem>
                 <MenuItem Header ="Open" x:Name="OpenFile" Click="OpenFile_OnClick"></MenuItem>
                 <MenuItem Header="Save" x:Name="Save" Click="Save_OnClick"></MenuItem>
-                <MenuItem Header="Saveas" x:Name="SaveAs" Click=" Save_As_OnClick"></MenuItem>
+                <MenuItem Header="Save as" x:Name="SaveAs" Click=" Save_As_OnClick"></MenuItem>
                 <MenuItem Header="Print" x:Name="Print" Click="Print_OnClick"></MenuItem>
 
             </MenuItem>
@@ -24,8 +24,8 @@
             </MenuItem>
 
             <MenuItem Header="Exit" x:Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
-            <TextBlock x:Name="Textblock_File_Path" TextWrapping="Wrap" Text="" Height="17" Width="347" />
-            <TextBlock x:Name="Textblock_File_Type" TextWrapping="Wrap" Text="" Height="17" Width="294"/>
+            <Label x:Name="LabelFilePath"  Height="17" Width="347" />
+            <Label x:Name="LabelFileType"  Height="17" Width="294"/>
 
 
 
