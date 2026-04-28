@@ -1,10 +1,7 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices.JavaScript;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.VisualBasic.Devices;
 using Notepad.Functions;
 using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -59,7 +56,6 @@ public  class Methods
                       
                   }
             }
-
             else if (File.Exists(_datatypes._Filepath))
             {
                 using (StreamWriter sw = new StreamWriter(_datatypes._Filepath))
@@ -70,8 +66,6 @@ public  class Methods
                     
                 }
                 
-                
-                
                 //open file after saving
                 openfiledialog.Title = "Open File";
                 openfiledialog.InitialDirectory = _datatypes._Downloads;
@@ -79,7 +73,6 @@ public  class Methods
                 openfiledialog.DefaultExt = ".txt";
                 openfiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 
-
                 if (openfiledialog.ShowDialog() == DialogResult.OK)
                 {
                     var filestream = openfiledialog.OpenFile();
@@ -93,13 +86,7 @@ public  class Methods
                         _mainWindow.LabelFilePath.Content = Path.GetExtension(_datatypes._Filepath);
                         
                     }
-                  
-                   
-                    
                 }
-                
-                
-                
             }
             break;
           case DialogResult.No:
@@ -249,7 +236,14 @@ public  class Methods
     }
     
     
-    public void
+    public void Timestamp ()
+    {
+        
+        var create_date_Time
+            = DateTime.Now.ToLongDateString() + Environment.NewLine;
+        _mainWindow.Textbox_Main.AppendText(create_date_Time);
+        
+    }
     
     public void changefontsize()
     {
@@ -279,14 +273,35 @@ public  class Methods
     
     public void newfile()
     {
-        
-        
-        
-        
-        
-        
+        var capation = "Do you wish to save the current file before creating a new file";
+        var newmessagebox = MessageBoxButtons.YesNoCancel;
+        DialogResult Result;
+        Result = MessageBox.Show(capation, _datatypes._Filepath ?? "Untitled", newmessagebox);
+
+
+        switch (Result)
+        {
+            
+            case DialogResult.Yes:
+                Savefile();
+                 _mainWindow.Textbox_Main.Clear();
+                 _datatypes._Filepath = null;
+                 _datatypes._Filename = null;
+                 _mainWindow.LabelFilePath.Content = "File Path: " + _datatypes._Filepath;
+                 _mainWindow.LabelFileType.Content = "File Type: " + _datatypes._Filetype;
+                break;
+            case DialogResult.No:
+                _mainWindow.Textbox_Main.Clear();
+                _datatypes._Filepath = null;
+                _datatypes._Filename = null;
+                break;
+            case DialogResult.Cancel:
+                break;
+            
+            
+            
+        }
     }
-    
     
    public void Format()
    {
@@ -298,7 +313,4 @@ public  class Methods
        
        
    }
-    
-    
-    
 }

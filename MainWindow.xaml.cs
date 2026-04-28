@@ -1,13 +1,9 @@
-﻿using System.Drawing.Printing;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using Notepad.Functions;
-using FontFamily = System.Windows.Media.FontFamily;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
-using PrintDialog = System.Windows.Controls.PrintDialog;
+
 
 
 namespace Notepad;
@@ -61,9 +57,7 @@ public partial class MainWindow
     {
 
 
-        var create_date_Time
-            = DateTime.Now.ToLongDateString() + Environment.NewLine;
-        Textbox_Main.AppendText(create_date_Time);
+      _methods.Timestamp();
 
 
 
@@ -118,17 +112,6 @@ public partial class MainWindow
     private void Format_OnClick(object sender, RoutedEventArgs e)
     {
     _methods.Format();
-        
-        /*
-        char format = '•';
-        // Convert.ToString(format + "\n" );
-
-
-
-        Textbox_Main.TextWrapping = TextWrapping.Wrap;
-        Textbox_Main.AppendText(format + "\n");
-        */
-
 
     }
 }

@@ -41,13 +41,12 @@ public class Datatypes
      
      set
      {
-         if (value == "Text files (*.txt)|*.txt|All files (*.*)|*.*")
-         {
-             Filetype = value;
+         Filetype = value;
          }
          
-        
-     }
+       
+     
+     
  }
   
  public string _Filepath
