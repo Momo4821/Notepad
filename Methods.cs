@@ -1,6 +1,14 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Runtime.InteropServices.JavaScript;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Microsoft.VisualBasic.Devices;
 using Notepad.Functions;
-
+using Application = System.Windows.Forms.Application;
+using MessageBox = System.Windows.Forms.MessageBox;
+using PrintDialog = System.Windows.Forms.PrintDialog;
 
 
 namespace Notepad;
@@ -17,8 +25,6 @@ public  class Methods
         _datatypes = new Datatypes();
     }
    
-
-    
     
     public void Openfile ()
    {
@@ -153,15 +159,7 @@ public  class Methods
             }
         }
         
-        
-        
-        
     }
-    
-    
-    
-    
-    
     
     public void savefile_as ()
     {
@@ -198,29 +196,82 @@ public  class Methods
          }
     }
     
-    
-    
-    
     public void print()
     {
+        var printDialog = new PrintDialog();
+        printDialog.Document.DocumentName = _datatypes._Filename ?? "Untitled";
+        printDialog.ShowHelp = true;
+        printDialog.AllowSomePages = true;
+        
+        if (printDialog.ShowDialog() == DialogResult.OK)
+        {
+
+            _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            printDialog.Document.Print();
+            
+            
+            
+        }
+        
+        _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+        _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+        
         
         
     }
-    
-    
     
     public void exit()
     {
+        string caption = "Do you wish to exit the application without saving the current file?";
+        var exitmessagebox = MessageBoxButtons.YesNoCancel;
+        DialogResult Result;
+        Result = MessageBox.Show(caption, _datatypes._Filename ?? "Untitled", exitmessagebox);
+     
+        
+        switch (Result)
+        {
+            case DialogResult.Yes:
+                Application.Exit();
+                break;
+            case DialogResult.No:
+                Savefile();
+                Application.Exit();
+                break;
+            case DialogResult.Cancel:
+                break;
+                //do nothing
+        }
+        
+        
         
         
     }
     
     
-    
+    public void
     
     public void changefontsize()
     {
         
+        var choosefont = new FontDialog();
+        choosefont.ShowHelp = true;
+        choosefont.ShowColor = true;
+        choosefont.ShowEffects = true;
+        choosefont.MinSize = 20;
+        
+
+        if (choosefont.ShowDialog() ==  DialogResult.OK)
+        {
+            _mainWindow.Textbox_Main.Text = choosefont.Font.FontFamily.Name;
+            _mainWindow.Textbox_Main.FontSize = choosefont.Font.Size;
+            _mainWindow.Textbox_Main.FontWeight = choosefont.Font.Bold ? FontWeights.Bold : FontWeights.Regular;
+            _mainWindow.Textbox_Main.FontStyle = choosefont.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
+            _mainWindow.Textbox_Main.TextDecorations = choosefont.Font.Underline ? TextDecorations.Underline : TextDecorations.Baseline;
+             _mainWindow.Textbox_Main.TextDecorations = choosefont.Font.Strikeout ? TextDecorations.Strikethrough : null;
+             _mainWindow.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(choosefont.Color.A, choosefont.Color.R, choosefont.Color.G, choosefont.Color.B));
+             
+        }
         
     }
     
@@ -230,8 +281,23 @@ public  class Methods
     {
         
         
+        
+        
+        
+        
     }
     
+    
+   public void Format()
+   {
+       
+       Char Format = '•';
+       _mainWindow.Textbox_Main.TextWrapping = TextWrapping.Wrap;
+       _mainWindow.Textbox_Main.AppendText(Format + "\n");
+       
+       
+       
+   }
     
     
     

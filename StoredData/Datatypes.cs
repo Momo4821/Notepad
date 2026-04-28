@@ -11,8 +11,6 @@ public class Datatypes
  
  private string FilePath;
  
- public bool Ismodified { get; set; }
- 
  
  private string Downloads = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
  

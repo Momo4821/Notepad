@@ -10,14 +10,7 @@
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/copilotDiffState.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Services/FileService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Methods.cs" afterDir="false" />
-    </list>
+    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,7 +180,7 @@
       <workItem from="1777044333393" duration="3421000" />
       <workItem from="1777075647155" duration="21469000" />
       <workItem from="1777230908845" duration="9638000" />
-      <workItem from="1777263261065" duration="864000" />
+      <workItem from="1777263261065" duration="917000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed SaveonClick Meothod. Need to still implement a check if file/path exists.">
       <option name="closed" value="true" />
@@ -293,7 +286,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777080357750</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="4-27-2026">
+      <option name="closed" value="true" />
+      <created>1777264147106</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1777264147106</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,7 +316,8 @@
     <MESSAGE value="Complete" />
     <MESSAGE value="Created Branch for YouTrack Ticket NP-1 Clean Up Code." />
     <MESSAGE value="Fixed Openfile Method in the Methods.cs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Openfile Method in the Methods.cs." />
+    <MESSAGE value="4-27-2026" />
+    <option name="LAST_COMMIT_MESSAGE" value="4-27-2026" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
