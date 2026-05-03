@@ -7,13 +7,12 @@
         Icon = "C:\Users\malan\source\repos\Notepad\Icon\Notepad_Icon.ico"
         Title="Notepad" Height="450" Width="800">
     <Grid>
-        <!--<ScrollBar HorizontalAlignment="Left" x:Name="Scrollbar_Main" Margin="773,29,0,0" VerticalAlignment="Top" RenderTransformOrigin="4.9,-1.852" Height="337"/> -->
         <Menu>
             <MenuItem Header="File">
-                <MenuItem Header="new" x:Name="New" Click="New_OnClick"> </MenuItem>
+                <MenuItem Header="New" x:Name="New" Click="New_OnClick"> </MenuItem>
                 <MenuItem Header ="Open" x:Name="OpenFile" Click="OpenFile_OnClick"></MenuItem>
                 <MenuItem Header="Save" x:Name="Save" Click="Save_OnClick"></MenuItem>
-                <MenuItem Header="Saveas" x:Name="SaveAs" Click=" Save_As_OnClick"></MenuItem>
+                <MenuItem Header="Save as" x:Name="SaveAs" Click=" Save_As_OnClick"></MenuItem>
                 <MenuItem Header="Print" x:Name="Print" Click="Print_OnClick"></MenuItem>
 
             </MenuItem>
@@ -24,21 +23,17 @@
                 <MenuItem Header="Format" x:Name="Format" Click="Format_OnClick"></MenuItem>
             </MenuItem>
 
-            <MenuItem Header="Exit" Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
-            <TextBlock x:Name="Textblock_File_Path" TextWrapping="Wrap" Text="" Height="17" Width="347" />
-            <TextBlock x:Name="Textblock_File_Type" TextWrapping="Wrap" Text="" Height="17" Width="294"/>
+            <MenuItem Header="Exit" x:Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
+            <Label  x:Name="LabelFilePath"  Height="40" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Content="dsad" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+            <Label x:Name="LabelFileType"  Height="40" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Content="fsdfa" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
 
 
         </Menu>
-        <!--<ScrollBar x:Name="Scrollbar" Margin="778,10,5,76"/> -->
-        <TextBox x:Name="Textbox_Main" TextChanged="Textbox_Main_OnTextChanged" TextWrapping="Wrap" AcceptsReturn="True" Text="" AcceptsTab="True" Margin="10,51,19,19"  
-                  VerticalScrollBarVisibility="Visible" KeyDown="Textbox_Main_OnKeyDown" Padding="10px" FontFamily="Times New Roman" FontSize="20" IsReadOnly="False"/>
-
-    
-
+        
+       
+        <TextBox x:Name="Textbox_Main" TextWrapping="Wrap" AcceptsReturn="True" Text="" AcceptsTab="True" Margin="10,51,19,19"  
+                  VerticalScrollBarVisibility="Visible" KeyDown="Textbox_Main_OnKeyDown" Padding="10px" FontFamily="Times New Roman" FontSize="20" IsReadOnly="False"
+               />
     </Grid>
-
-
-
 </Window>
