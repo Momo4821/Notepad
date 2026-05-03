@@ -10,14 +10,7 @@
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/StoredData/FileService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Methods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StoredData/Datatypes.cs" beforeDir="false" />
-    </list>
+    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,7 +93,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;NP1-CleanUpCode&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -358,7 +351,8 @@
     <MESSAGE value="4-27-2026" />
     <MESSAGE value="Created the new methods in the Methods.cs File." />
     <MESSAGE value="Fixed Methods.cs. All Functions are now called in the MainWindow.xaml.cs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Methods.cs. All Functions are now called in the MainWindow.xaml.cs." />
+    <MESSAGE value="5/3/2026." />
+    <option name="LAST_COMMIT_MESSAGE" value="5/3/2026." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

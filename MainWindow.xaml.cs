@@ -84,7 +84,6 @@ public partial class MainWindow
             = DateTime.Now.ToLongDateString() + "\n";
         bool test = Keyboard.IsKeyDown(Key.F5);
         bool Key_f5_Pressed = Keyboard.IsKeyDown(Key.F5);
-        // F5 Key Pressed - Insert Date and Time
         if (Key_f5_Pressed)
         {
 

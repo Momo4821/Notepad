@@ -251,10 +251,6 @@ public  class Methods
     
     public void Newfile()
     {
-        /*var capation = "Do you wish to save the current file before creating a new file";
-        var newmessagebox = MessageBoxButtons.YesNoCancel;
-        DialogResult Result;
-        Result = MessageBox.Show(capation, _datatypes._Filepath ?? "Untitled", newmessagebox);*/
         MessageBoxResult Result;
         Result = System.Windows.MessageBox.Show("Do you wish to save the current file before creating a new file?", _fileService.Filepath ?? "Untitled", MessageBoxButton.YesNoCancel);
 
