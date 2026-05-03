@@ -24,8 +24,8 @@
             </MenuItem>
 
             <MenuItem Header="Exit" x:Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
-            <Label x:Name="LabelFilePath"  Height="20" Width="347" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <Label x:Name="LabelFileType"  Height="20" Width="294" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label  x:Name="LabelFilePath"  Height="40" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Content="dsad" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+            <Label x:Name="LabelFileType"  Height="40" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Content="fsdfa" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
 
 

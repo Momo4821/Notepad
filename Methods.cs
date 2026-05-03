@@ -5,7 +5,6 @@ using System.Windows.Media;
 using Notepad.Functions;
 using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.Forms.MessageBox;
-using PrintDialog = System.Windows.Forms.PrintDialog;
 
 
 namespace Notepad;
@@ -32,7 +31,7 @@ public  class Methods
             savefiledialog.RestoreDirectory = true;
             savefiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
             savefiledialog.InitialDirectory = _fileService.Downlaods;
-            savefiledialog.CheckFileExists = true;
+            savefiledialog.CheckFileExists = false;
             savefiledialog.OverwritePrompt = true;
     }
     
@@ -46,6 +45,23 @@ public  class Methods
         opendialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
         
     }
+    
+    private void Printdialogconfiguration(System.Windows.Controls.PrintDialog printdialog)
+    {
+        printdialog.PageRangeSelection = System.Windows.Controls.PageRangeSelection.AllPages;
+        printdialog.UserPageRangeEnabled = false;
+        printdialog.PrintTicket.PageOrientation = System.Printing.PageOrientation.Portrait;
+        
+        printdialog.PrintTicket.PageMediaSize = new System.Printing.PageMediaSize(System.Printing.PageMediaSizeName.NorthAmericaLetter);
+        
+        
+        //disable UI
+        _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+        _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+        _mainWindow.Textbox_Main.BorderThickness = new Thickness(0);
+        
+    }
+    
     
     
     /// <summary>
@@ -154,27 +170,31 @@ public  class Methods
     }
     public void Print()
     {
-        var printDialog = new PrintDialog();
-        printDialog.Document.DocumentName = _fileService.FileName ?? "Untitled";
-        printDialog.ShowHelp = true;
-        printDialog.AllowSomePages = true;
         
-        if (printDialog.ShowDialog() == DialogResult.OK)
-        {
+        var printdialog = new System.Windows.Controls.PrintDialog();
+        Printdialogconfiguration(printdialog);
 
-            _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-            _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-            printDialog.Document.Print();
+
+        try
+        {
+            if (printdialog.ShowDialog() == true)
+            {
+              
             
+                printdialog.PrintVisual(_mainWindow.Textbox_Main, "Print Document");
             
-            
+            }
         }
-        
-        _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-        _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-        
-        
-        
+        catch (Exception e)
+        {
+            MessageBox.Show($"An error occurred while trying to print the document. Please check your printer settings and try again.{e}");
+            throw;
+        }
+       
+        _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
+        _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        _mainWindow.Textbox_Main.BorderThickness = new Thickness(1);
+      
     }
     
     public void Exit()
