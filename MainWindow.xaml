@@ -24,8 +24,8 @@
             </MenuItem>
 
             <MenuItem Header="Exit" x:Name="Exit" Height="51" Width="42" Click="Exit_OnClick"></MenuItem>
-            <Label x:Name="LabelFilePath"  Height="17" Width="347" />
-            <Label x:Name="LabelFileType"  Height="17" Width="294"/>
+            <Label x:Name="LabelFilePath"  Height="20" Width="347" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Label x:Name="LabelFileType"  Height="20" Width="294" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
 
 

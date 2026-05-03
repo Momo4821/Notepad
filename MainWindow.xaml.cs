@@ -11,13 +11,13 @@ namespace Notepad;
 public partial class MainWindow
 {
     private readonly Methods _methods; 
-    private readonly Datatypes _datatypes;
+    private readonly FileService _fileService;
     public MainWindow ()
     {
         InitializeComponent();
         
         _methods = new Methods(this);
-        _datatypes = new Datatypes();
+        _fileService = new FileService();
         
     }
     
@@ -37,19 +37,19 @@ public partial class MainWindow
 
     private void Save_As_OnClick(object sender, RoutedEventArgs e)
     {
-        _methods.savefile_as();
+        _methods.SaveFileas();
     }
 
 
     private void Print_OnClick(object sender, RoutedEventArgs e)
     {
-        _methods.print();
+        _methods.Print();
 
     }
 
     private void Exit_OnClick(object sender, RoutedEventArgs e)
     {
-       _methods.exit();
+       _methods.Exit();
     }
 
 
@@ -66,7 +66,7 @@ public partial class MainWindow
     
     private void Change_Font_OnClick(object sender, RoutedEventArgs e)
     {
-        _methods.changefontsize();
+        _methods.Changefontsize();
         
     }
 
@@ -75,7 +75,7 @@ public partial class MainWindow
     private void New_OnClick(object sender, RoutedEventArgs e)
     {
         
-        _methods.newfile();
+        _methods.Newfile();
     }
     
     private void Textbox_Main_OnKeyDown(object sender, KeyEventArgs e)

@@ -14,179 +14,148 @@ public  class Methods
 { 
         
         private readonly MainWindow _mainWindow;
-        private readonly Datatypes _datatypes;
+        private readonly FileService _fileService;
     
     public Methods(MainWindow mainWindow)
     {
         _mainWindow = mainWindow;
-        _datatypes = new Datatypes();
+        _fileService = new FileService();
     }
    
+   /// <summary>
+   /// Dialog configuration for SaveFileDialog and OpenFileDialog are seperated into two methods to avoid
+   /// redudent code and to make the code more readable and maintainable.
+   /// </summary>
+    private void Configuraitonsavefiledialog(Microsoft.Win32.SaveFileDialog savefiledialog)
+    {
+            savefiledialog.Title = $"$Save File {_fileService.FileName}";
+            savefiledialog.RestoreDirectory = true;
+            savefiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            savefiledialog.InitialDirectory = _fileService.Downlaods;
+            savefiledialog.CheckFileExists = true;
+            savefiledialog.OverwritePrompt = true;
+    }
     
+    
+    private void Configurationopenfiledialog(Microsoft.Win32.OpenFileDialog opendialog)
+    {
+        opendialog.Title = "Open File";
+        opendialog.InitialDirectory = _fileService.Downlaods;
+        opendialog.RestoreDirectory = true;
+        opendialog.DefaultExt = ".txt";
+        opendialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+        
+    }
+    
+    
+    /// <summary>
+    /// ClearUI method is used to clear the UI when creating a new file or when the user chooses not to save the current file before opening a new one.
+    /// It clears the text box and resets the file path and file type labels.
+    /// </summary>
+    private void UpdateFilelables(FileService fileService)
+    {
+        _mainWindow.LabelFilePath.Content = _fileService.Filepath;
+        _mainWindow.LabelFileType.Content = _fileService.FileType;
+    }
+    
+    private void ClearUI()
+    {
+        _mainWindow.Textbox_Main.Clear();
+        _mainWindow.LabelFilePath.Content = "";
+        _mainWindow.LabelFileType.Content = "";
+        _fileService.Filepath = null!;
+        
+    }
+    
+    
+    /// <summary>
+    ///File Operations for the application
+    /// </summary>
     public void Openfile ()
    {
-      string caption = "Do you wish to save the current file before opening a new one";
-      var openfilemessagebox = MessageBoxButtons.YesNoCancel;
-      DialogResult Result;
-      Result = MessageBox.Show(caption, string.Empty, openfilemessagebox);
-       Convert.ToBoolean(Result);
-       var savefiledialog = new SaveFileDialog();
-       var openfiledialog = new OpenFileDialog();
-       
-      switch (Result)
-      {
-        case DialogResult.Yes:
-            MessageBox.Show(caption);
-            if (!File.Exists(_datatypes._Filepath) && savefiledialog.ShowDialog() == DialogResult.OK)
-            {
-              
-              savefiledialog.Title = "Save File";
-              savefiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-              savefiledialog.InitialDirectory = _datatypes._Downloads;
-              savefiledialog.RestoreDirectory = true;
-              savefiledialog.AddExtension = true;
-              savefiledialog.DefaultExt = ".txt";
-              savefiledialog.CheckFileExists = true;
-              savefiledialog.OverwritePrompt = true;
-              
-                  using(StreamWriter sw = new StreamWriter(_datatypes._Filepath))
-                  {
-                      sw.Write(_mainWindow.Textbox_Main.Text);
-                      MessageBox.Show("File Saved");
-                      
-                  }
-            }
-            else if (File.Exists(_datatypes._Filepath))
-            {
-                using (StreamWriter sw = new StreamWriter(_datatypes._Filepath))
-                {
-                    
-                    sw.Write(_mainWindow.Textbox_Main.Text);
-                    MessageBox.Show("File Saved", _datatypes._Filepath);
-                    
-                }
-                
-                //open file after saving
-                openfiledialog.Title = "Open File";
-                openfiledialog.InitialDirectory = _datatypes._Downloads;
-                openfiledialog.RestoreDirectory = true;
-                openfiledialog.DefaultExt = ".txt";
-                openfiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                
-                if (openfiledialog.ShowDialog() == DialogResult.OK)
-                {
-                    var filestream = openfiledialog.OpenFile();
-                    using (StreamReader sr = new StreamReader(filestream))
-                    {
-                        
+       if (_fileService.HasFile)
+       {
+           var openfileMessagebox = MessageBoxButtons.YesNoCancel;
+           DialogResult Result;
+           string caption = "Do you wish to save the current file before opening a new one?";
+           Result = MessageBox.Show(caption, _fileService.Filepath ?? "Untitled", openfileMessagebox);
 
-                        _mainWindow.Textbox_Main.Text = sr.ReadToEnd();
-                        _datatypes._Filepath = openfiledialog.FileName;
-                        _mainWindow.LabelFileType.Content = _datatypes._Filetype;
-                        _mainWindow.LabelFilePath.Content = Path.GetExtension(_datatypes._Filepath);
-                        
-                    }
-                }
-            }
-            break;
-          case DialogResult.No:
-              if (openfiledialog.ShowDialog() == DialogResult.OK)
-              { 
-                  using StreamReader sr = new StreamReader(openfiledialog.OpenFile());
-                 _mainWindow.Textbox_Main.Text = sr.ReadToEnd();
-                 _datatypes._Filepath = openfiledialog.FileName;
-                 _mainWindow.LabelFilePath.Content = _datatypes._Filepath;
-                  _mainWindow.LabelFilePath.Content = Path.GetExtension(_datatypes._Filetype);
-              }
-              break;
-          case DialogResult.Cancel:
-              break;
-              //do nothing
-         
-      }
+           switch (Result)
+           {
+            case DialogResult.Yes:
+                Savefile();
+                break;
+            case DialogResult.No:
+                break;
+            case DialogResult.Cancel:
+                return;
+               
+               
+           }
+       
+       
    }
+       var openfileDialog = new Microsoft.Win32.OpenFileDialog();
+       Configurationopenfiledialog(openfileDialog);
+       if (openfileDialog.ShowDialog() == true)
+       {
+           ClearUI();
+           using(StreamReader sr = new StreamReader(openfileDialog.OpenFile()))
+           {
+               _mainWindow.Textbox_Main.Text = sr.ReadToEnd();
+                   
+           }
+           _fileService.Filepath = openfileDialog.FileName;
+           UpdateFilelables(_fileService);
+               
+       }
+           
+   }
+    
     
     public void Savefile()
     {
-      
-        var savefiledialog  = new SaveFileDialog();
-        savefiledialog.Title = $"$Save File {_datatypes._Filename}";
-        savefiledialog.RestoreDirectory = true;
-        savefiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-        savefiledialog.InitialDirectory = _datatypes._Downloads;
-        savefiledialog.CheckFileExists = true;
-        savefiledialog.OverwritePrompt = true;
-        
-        
-        if (!File.Exists(_datatypes._Filepath) && savefiledialog.ShowDialog() == DialogResult.OK)
+
+        if (_fileService.HasFile)
         {
+            using (StreamWriter sw = new StreamWriter(_fileService.Filepath))
+            {
+                sw.Write(_mainWindow.Textbox_Main.Text);
+                
+            }
+            MessageBox.Show("File Saved");
+            UpdateFilelables(_fileService);
             
-            savefiledialog.AddExtension = true;
-            savefiledialog.DefaultExt = ".txt";
-            using (StreamWriter sw = new StreamWriter(savefiledialog.OpenFile()))
-            {
-                sw.Write(_mainWindow.Textbox_Main.Text);
-                MessageBox.Show("File Saved");
-                _mainWindow.LabelFilePath.Content = savefiledialog.FileName;
-                _mainWindow.LabelFileType.Content = Path.GetExtension(savefiledialog.FileName);
-                
-            }
+            
         }
-        else if (File.Exists(_datatypes._Filepath))
+        else
         {
-            using (StreamWriter sw = new StreamWriter(_datatypes._Filepath))
-            {
-                
-                sw.Write(_mainWindow.Textbox_Main.Text);
-                MessageBox.Show("File Saved", _datatypes._Filepath + _datatypes._Filename);
-                _mainWindow.LabelFilePath.Content = _datatypes._Filepath;
-                _mainWindow.LabelFileType.Content = Path.GetExtension(_datatypes._Filepath);
-                
-                
-            }
+            SaveFileas();
         }
+        
         
     }
     
-    public void savefile_as ()
+    public void SaveFileas ()
     {
-        var savefiledialog  = new SaveFileDialog();
-        savefiledialog.Title = $"$Save File As {_datatypes._Filename}";
-        savefiledialog.RestoreDirectory = true;
-        savefiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-        savefiledialog.InitialDirectory = _datatypes._Downloads;
-        savefiledialog.CheckFileExists = true;
-        
-        if (savefiledialog.ShowDialog() == DialogResult.OK)
+    var savefileas = new Microsoft.Win32.SaveFileDialog();
+    Configuraitonsavefiledialog(savefileas);
+    if(savefileas.ShowDialog() == true)
+    {
+        using (StreamWriter sw = new StreamWriter(savefileas.OpenFile()))
         {
-            savefiledialog.AddExtension = true;
-            savefiledialog.DefaultExt = ".txt";
-            using (StreamWriter sw = new StreamWriter(savefiledialog.OpenFile()))
-            {
-                sw.Write(_mainWindow.Textbox_Main.Text);
-                MessageBox.Show("File Saved");
-                _mainWindow.LabelFilePath.Content = savefiledialog.FileName;
-                _mainWindow.LabelFileType.Content = Path.GetExtension(savefiledialog.FileName);
-                
-            }
+            sw.Write(_mainWindow.Textbox_Main.Text);
         }
+        _fileService.Filepath = savefileas.FileName;
+        UpdateFilelables(_fileService);
+        MessageBox.Show("File Saved");        
         
-         else if (File.Exists(_datatypes._Filepath))
-         {
-              using (StreamWriter sw = new StreamWriter(_datatypes._Filepath))
-              {
-                  sw.Write(_mainWindow.Textbox_Main.Text);
-                  MessageBox.Show("File Saved", _datatypes._Filepath);
-                  
-              }
-             
-         }
     }
-    
-    public void print()
+    }
+    public void Print()
     {
         var printDialog = new PrintDialog();
-        printDialog.Document.DocumentName = _datatypes._Filename ?? "Untitled";
+        printDialog.Document.DocumentName = _fileService.FileName ?? "Untitled";
         printDialog.ShowHelp = true;
         printDialog.AllowSomePages = true;
         
@@ -208,44 +177,34 @@ public  class Methods
         
     }
     
-    public void exit()
+    public void Exit()
     {
+        MessageBoxResult Result;
         string caption = "Do you wish to exit the application without saving the current file?";
-        var exitmessagebox = MessageBoxButtons.YesNoCancel;
-        DialogResult Result;
-        Result = MessageBox.Show(caption, _datatypes._Filename ?? "Untitled", exitmessagebox);
-     
-        
+        Result = System.Windows.MessageBox.Show(caption, _fileService.Filepath ?? "Untitled", MessageBoxButton.YesNoCancel);
         switch (Result)
         {
-            case DialogResult.Yes:
+            case MessageBoxResult.Yes:
                 Application.Exit();
                 break;
-            case DialogResult.No:
+            case MessageBoxResult.No:
                 Savefile();
                 Application.Exit();
                 break;
-            case DialogResult.Cancel:
+            case MessageBoxResult.Cancel:
                 break;
                 //do nothing
         }
-        
-        
-        
-        
     }
-    
     
     public void Timestamp ()
     {
-        
         var create_date_Time
             = DateTime.Now.ToLongDateString() + Environment.NewLine;
         _mainWindow.Textbox_Main.AppendText(create_date_Time);
-        
     }
     
-    public void changefontsize()
+    public void Changefontsize()
     {
         
         var choosefont = new FontDialog();
@@ -270,39 +229,29 @@ public  class Methods
     }
     
     
-    
-    public void newfile()
+    public void Newfile()
     {
-        var capation = "Do you wish to save the current file before creating a new file";
+        /*var capation = "Do you wish to save the current file before creating a new file";
         var newmessagebox = MessageBoxButtons.YesNoCancel;
         DialogResult Result;
-        Result = MessageBox.Show(capation, _datatypes._Filepath ?? "Untitled", newmessagebox);
-
+        Result = MessageBox.Show(capation, _datatypes._Filepath ?? "Untitled", newmessagebox);*/
+        MessageBoxResult Result;
+        Result = System.Windows.MessageBox.Show("Do you wish to save the current file before creating a new file?", _fileService.Filepath ?? "Untitled", MessageBoxButton.YesNoCancel);
 
         switch (Result)
         {
             
-            case DialogResult.Yes:
+            case MessageBoxResult.Yes:
                 Savefile();
-                 _mainWindow.Textbox_Main.Clear();
-                 _datatypes._Filepath = null;
-                 _datatypes._Filename = null;
-                 _mainWindow.LabelFilePath.Content = "File Path: " + _datatypes._Filepath;
-                 _mainWindow.LabelFileType.Content = "File Type: " + _datatypes._Filetype;
+                ClearUI();
                 break;
-            case DialogResult.No:
-                _mainWindow.Textbox_Main.Clear();
-                _datatypes._Filepath = null;
-                _datatypes._Filename = null;
+            case MessageBoxResult.No:
+             ClearUI();
                 break;
-            case DialogResult.Cancel:
+            case MessageBoxResult.Cancel:
                 break;
-            
-            
-            
         }
     }
-    
    public void Format()
    {
        

@@ -11,9 +11,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/StoredData/FileService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Methods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Methods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoredData/Datatypes.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +30,12 @@
   </component>
   <component name="CopilotUserSelectedChatMode">
     <option name="chatModeId" value="Ask" />
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="agent-panel" value="Claude Haiku 4.5" />
+      <entry key="chat-panel" value="Claude Haiku 4.5" />
+    </selectedModels>
   </component>
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
@@ -189,6 +198,12 @@
       <workItem from="1777230908845" duration="9638000" />
       <workItem from="1777263261065" duration="917000" />
       <workItem from="1777311031113" duration="24264000" />
+      <workItem from="1777397094947" duration="8214000" />
+      <workItem from="1777423724798" duration="432000" />
+      <workItem from="1777424392288" duration="715000" />
+      <workItem from="1777425519572" duration="16981000" />
+      <workItem from="1777703501242" duration="7104000" />
+      <workItem from="1777744166334" duration="12288000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed SaveonClick Meothod. Need to still implement a check if file/path exists.">
       <option name="closed" value="true" />
@@ -310,7 +325,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777348334282</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fixed Methods.cs. All Functions are now called in the MainWindow.xaml.cs.">
+      <option name="closed" value="true" />
+      <created>1777413673078</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1777413673078</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,7 +357,8 @@
     <MESSAGE value="Fixed Openfile Method in the Methods.cs." />
     <MESSAGE value="4-27-2026" />
     <MESSAGE value="Created the new methods in the Methods.cs File." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created the new methods in the Methods.cs File." />
+    <MESSAGE value="Fixed Methods.cs. All Functions are now called in the MainWindow.xaml.cs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Methods.cs. All Functions are now called in the MainWindow.xaml.cs." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
