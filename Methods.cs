@@ -2,7 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Notepad.CustomDialog;
 using Notepad.Functions;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -14,35 +18,53 @@ public  class Methods
         
         private readonly MainWindow _mainWindow;
         private readonly FileService _fileService;
+        private SettingsView _settingsView;
     
-    public Methods(MainWindow mainWindow)
+ 
+    
+    
+    public Methods(MainWindow mainWindow, SettingsView settingsView)
     {
+        _settingsView = settingsView;
         _mainWindow = mainWindow;
         _fileService = new FileService();
+       
+    var levelswitch = new LoggingLevelSwitch();
+        
+        
     }
+    
+    
+    
+    
    
    /// <summary>
    /// Dialog configuration for SaveFileDialog and OpenFileDialog are seperated into two methods to avoid
    /// redudent code and to make the code more readable and maintainable.
    /// </summary>
     private void Configuraitonsavefiledialog(Microsoft.Win32.SaveFileDialog savefiledialog)
-    {
+    { 
+     
             savefiledialog.Title = $"$Save File {_fileService.FileName}";
             savefiledialog.RestoreDirectory = true;
             savefiledialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
             savefiledialog.InitialDirectory = _fileService.Downlaods;
             savefiledialog.CheckFileExists = false;
             savefiledialog.OverwritePrompt = true;
+            Log.Information("Save File Configuration Used");
     }
     
     
     private void Configurationopenfiledialog(Microsoft.Win32.OpenFileDialog opendialog)
     {
+    
+        
         opendialog.Title = "Open File";
         opendialog.InitialDirectory = _fileService.Downlaods;
         opendialog.RestoreDirectory = true;
         opendialog.DefaultExt = ".txt";
         opendialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+        Log.Information("Open File Configuration Used");
         
     }
     
@@ -53,12 +75,14 @@ public  class Methods
         printdialog.PrintTicket.PageOrientation = System.Printing.PageOrientation.Portrait;
         
         printdialog.PrintTicket.PageMediaSize = new System.Printing.PageMediaSize(System.Printing.PageMediaSizeName.NorthAmericaLetter);
-        
-        
-        //disable UI
+    }
+    
+    private void PrintDialogClearUi ()
+    {
         _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
         _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-        _mainWindow.Textbox_Main.BorderThickness = new Thickness(0);
+        _mainWindow.Textbox_Main.BorderThickness = new Thickness(0); 
+        Log.Logger.Information($"Textbox Scroll {_mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled}");
         
     }
     
@@ -72,6 +96,8 @@ public  class Methods
     {
         _mainWindow.LabelFilePath.Content = _fileService.Filepath;
         _mainWindow.LabelFileType.Content = _fileService.FileType;
+        Log.Logger.Information($"File {_fileService.Filepath} has been updated");
+        Log.Logger.Information($"File {_fileService.FileType} has been updated");
     }
     
     private void ClearUI()
@@ -80,6 +106,8 @@ public  class Methods
         _mainWindow.LabelFilePath.Content = "";
         _mainWindow.LabelFileType.Content = "";
         _fileService.Filepath = null!;
+       // Log.Logger.Information($"{_mainWindow.Textbox_Main.Text} and  has been Cleared");
+       Log.Logger.Information("UI Cleared");
         
     }
     
@@ -115,6 +143,7 @@ public  class Methods
        Configurationopenfiledialog(openfileDialog);
        if (openfileDialog.ShowDialog() == true)
        {
+           
            ClearUI();
            using(StreamReader sr = new StreamReader(openfileDialog.OpenFile()))
            {
@@ -140,7 +169,9 @@ public  class Methods
                 
             }
             MessageBox.Show("File Saved");
+            Log.Logger.Information($"File Saved {_fileService.FileName}");
             UpdateFilelables(_fileService);
+            Log.Logger.Information("Labels Updated");
             
             
         }
@@ -164,7 +195,8 @@ public  class Methods
         }
         _fileService.Filepath = savefileas.FileName;
         UpdateFilelables(_fileService);
-        MessageBox.Show("File Saved");        
+        Log.Information("File saved successfully at {Path}", _fileService.Filepath);
+        MessageBox.Show("File Saved");   
         
     }
     }
@@ -173,6 +205,7 @@ public  class Methods
         
         var printdialog = new System.Windows.Controls.PrintDialog();
         Printdialogconfiguration(printdialog);
+        PrintDialogClearUi();
 
 
         try
@@ -258,6 +291,7 @@ public  class Methods
         {
             
             case MessageBoxResult.Yes:
+                
                 Savefile();
                 ClearUI();
                 break;
@@ -278,4 +312,33 @@ public  class Methods
        
        
    }
+   
+   public void Settingsmenu()
+   {
+       
+    _settingsView = new  SettingsView();
+    
+    
+    
+    
+    
+bool isinformation = Log.IsEnabled(LogEventLevel.Information);
+bool isdebug = Log.IsEnabled(LogEventLevel.Debug);
+    if (isinformation)
+    {
+        
+        _settingsView.InformationlogLevelButton.IsChecked = true;
+        
+    }
+      
+    
+    if(isdebug)
+    {
+        
+        _settingsView.DebugLogLevelButton.IsChecked = true;
+    }
+       
+       
+   }
+   
 }

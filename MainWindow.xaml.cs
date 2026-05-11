@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Notepad.CustomDialog;
 using Notepad.Functions;
+using Serilog;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 
@@ -16,9 +18,19 @@ public partial class MainWindow
     {
         InitializeComponent();
         
-        _methods = new Methods(this);
+        var settingsview = new SettingsView();
+        _methods = new Methods(this, settingsview);
         _fileService = new FileService();
         
+        
+        
+        
+AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+{
+    Exception ex = (Exception)args.ExceptionObject;
+    Log.Fatal("Unhandled Exception", ex);
+    
+};
     }
     
     public void OpenFile_OnClick(object sender, RoutedEventArgs e)
@@ -112,6 +124,11 @@ public partial class MainWindow
     {
     _methods.Format();
 
+    }
+
+    private void Settings_OnClick(object sender, RoutedEventArgs e)
+    {
+       _methods.Settingsmenu();
     }
 }
 

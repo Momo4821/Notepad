@@ -53,20 +53,28 @@
                 Height="51"
                 Click="Exit_OnClick"
                 Header="Exit" />
+            <MenuItem
+                x:Name="Settings"
+                Width="50"
+                Height="51"
+                Click="Settings_OnClick"
+                Header="Settings" />
+      
             <Label
                 x:Name="LabelFilePath"
                 Width="200"
-                Height="40"
+                Height="10"
+                Margin="102,20"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
+              
                 Content="" />
             <Label
                 x:Name="LabelFileType"
                 Width="200"
-                Height="40"
-                HorizontalAlignment="Center"
+                Height="20"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
@@ -85,5 +93,8 @@
             Text=""
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Visible" />
+       
+        <Popup></Popup>
+        
     </Grid>
 </Window>

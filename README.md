@@ -1,1 +1,1 @@
-A ligtweight note taking application.
+A lightweight note-taking application.
