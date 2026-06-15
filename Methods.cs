@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Notepad.CustomDialog;
 using Notepad.Functions;
+using Notepad.Logging;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -19,6 +20,7 @@ public  class Methods
         private readonly MainWindow _mainWindow;
         private readonly FileService _fileService;
         private SettingsView _settingsView;
+        private readonly LoggingData _loggingData;
     
  
     
@@ -28,10 +30,12 @@ public  class Methods
         _settingsView = settingsView;
         _mainWindow = mainWindow;
         _fileService = new FileService();
+        _loggingData = new LoggingData();
        
-    var levelswitch = new LoggingLevelSwitch();
+    
         
         
+    
     }
     
     
@@ -178,6 +182,7 @@ public  class Methods
         else
         {
             SaveFileas();
+            
         }
         
         
@@ -205,27 +210,32 @@ public  class Methods
         
         var printdialog = new System.Windows.Controls.PrintDialog();
         Printdialogconfiguration(printdialog);
+        Log.Information("PrintDialog UI Cleared");
         PrintDialogClearUi();
 
 
         try
-        {
+        {       Log.Information("PrintDialog Shown");
             if (printdialog.ShowDialog() == true)
             {
               
-            
+                
                 printdialog.PrintVisual(_mainWindow.Textbox_Main, "Print Document");
             
             }
         }
         catch (Exception e)
         {
+            Log.Error($"An error occurred while trying to print the document. Please check your printer settings and try again.{e}");
             MessageBox.Show($"An error occurred while trying to print the document. Please check your printer settings and try again.{e}");
             throw;
         }
        
+        Log.Information("Texbox Horizonital ScrollBar Visibility Set to Visible");
         _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
         _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        Log.Information("Texbox Veritcal ScrollBar Visibility Set to Visible");
+        Log.Information("Textbox Border Thickness Set to Visible");
         _mainWindow.Textbox_Main.BorderThickness = new Thickness(1);
       
     }
@@ -238,10 +248,12 @@ public  class Methods
         switch (Result)
         {
             case MessageBoxResult.Yes:
+                Log.Information("Exiting Application");
                 Application.Exit();
                 break;
             case MessageBoxResult.No:
                 Savefile();
+                Log.Information("Exiting Application");
                 Application.Exit();
                 break;
             case MessageBoxResult.Cancel:
@@ -308,6 +320,7 @@ public  class Methods
        Char Format = '•';
        _mainWindow.Textbox_Main.TextWrapping = TextWrapping.Wrap;
        _mainWindow.Textbox_Main.AppendText(Format + "\n");
+       Log.Information("• Format Used");
        
        
        
@@ -318,27 +331,7 @@ public  class Methods
        
     _settingsView = new  SettingsView();
     
-    
-    
-    
-    
-bool isinformation = Log.IsEnabled(LogEventLevel.Information);
-bool isdebug = Log.IsEnabled(LogEventLevel.Debug);
-    if (isinformation)
-    {
-        
-        _settingsView.InformationlogLevelButton.IsChecked = true;
-        
-    }
-      
-    
-    if(isdebug)
-    {
-        
-        _settingsView.DebugLogLevelButton.IsChecked = true;
-    }
-       
-       
+
    }
    
 }
