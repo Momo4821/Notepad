@@ -86,7 +86,7 @@ public  class Methods
         _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
         _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
         _mainWindow.Textbox_Main.BorderThickness = new Thickness(0); 
-        Log.Logger.Information($"Textbox Scroll {_mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled}");
+        Log.Information($"Textbox Scroll {_mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled}");
         
     }
     
@@ -98,20 +98,22 @@ public  class Methods
     /// </summary>
     private void UpdateFilelables(FileService fileService)
     {
+        Log.Debug($"UpdatefilesLabls method called");
         _mainWindow.LabelFilePath.Content = _fileService.Filepath;
         _mainWindow.LabelFileType.Content = _fileService.FileType;
-        Log.Logger.Information($"File {_fileService.Filepath} has been updated");
-        Log.Logger.Information($"File {_fileService.FileType} has been updated");
+        Log.Information($"File {_fileService.Filepath} has been updated");
+        Log.Information($"File {_fileService.FileType} has been updated");
     }
     
     private void ClearUI()
     {
+        Log.Debug($"Clearing UI. Clearing Textbox{_mainWindow.Textbox_Main.Text}, Filepath: {_fileService.Filepath} and Filetype: {_fileService.FileType}");
         _mainWindow.Textbox_Main.Clear();
         _mainWindow.LabelFilePath.Content = "";
         _mainWindow.LabelFileType.Content = "";
         _fileService.Filepath = null!;
-       // Log.Logger.Information($"{_mainWindow.Textbox_Main.Text} and  has been Cleared");
-       Log.Logger.Information("UI Cleared");
+       // Log.Information($"{_mainWindow.Textbox_Main.Text} and  has been Cleared");
+       Log.Information("UI Cleared");
         
     }
     
@@ -121,21 +123,26 @@ public  class Methods
     /// </summary>
     public void Openfile ()
    {
+       Log.Debug("Openfile method called");
        if (_fileService.HasFile)
        {
+       Log.Debug($"File {_fileService.Filepath} is currently open. Prompting user to save before opening a new file.");
            var openfileMessagebox = MessageBoxButtons.YesNoCancel;
            DialogResult Result;
            string caption = "Do you wish to save the current file before opening a new one?";
            Result = MessageBox.Show(caption, _fileService.Filepath ?? "Untitled", openfileMessagebox);
-
+            Log.Debug($"User selected {Result} in the message box.");
            switch (Result)
            {
             case DialogResult.Yes:
+                Log.Debug("User chose to save the current file before opening a new one.");
                 Savefile();
                 break;
             case DialogResult.No:
+                Log.Debug("User chose not to save the current file.");
                 break;
             case DialogResult.Cancel:
+                Log.Debug("User canceled the open file operation.");
                 return;
                
                
@@ -164,7 +171,7 @@ public  class Methods
     
     public void Savefile()
     {
-
+        ;
         if (_fileService.HasFile)
         {
             using (StreamWriter sw = new StreamWriter(_fileService.Filepath))
@@ -173,15 +180,15 @@ public  class Methods
                 
             }
             MessageBox.Show("File Saved");
-            Log.Logger.Information($"File Saved {_fileService.FileName}");
+            Log.Information($"File Saved {_fileService.FileName}");
             UpdateFilelables(_fileService);
-            Log.Logger.Information("Labels Updated");
+            Log.Information("Labels Updated");
             
             
         }
         else
         {
-            SaveFileas();
+            SaveFileas(); 
             
         }
         
