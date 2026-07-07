@@ -7,7 +7,7 @@ public class FileService
     
 private string _filePath;
 
-public string Downloads => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
+
 
 public string Filepath
 {
@@ -28,7 +28,7 @@ public string FileName => string.IsNullOrEmpty(_filePath) ? "Untitled" : Path.Ge
 public string FileType => string.IsNullOrEmpty(_filePath) ? "Text Document" : Path.GetExtension(_filePath);
 
 
-public string Downlaods => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
+public string Downloads => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
 
 
 public bool HasFile => !string.IsNullOrEmpty(_filePath); 

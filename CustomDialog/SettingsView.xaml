@@ -14,8 +14,8 @@
         
         
         <Grid Background="{DynamicResource Theme_BackgroundBrush}">
-                <RadioButton x:Name="InformationlogLevelButton" Content="Information Log Level" Margin="48,56,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="32" />
-                <RadioButton x:Name="DebugLogLevelButton" Content="Debug Log Level" Margin="48,96,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="32" />
+                <RadioButton x:Name="InformationlogLevelButton" Click="InformationlogLevelButton_OnClick" Content="Information Log Level" Margin="48,56,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="32" />
+                <RadioButton x:Name="DebugLogLevelButton" Click="DebugLogLevelButton_OnClick" Content="Debug Log Level" Margin="48,96,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="32" />
         </Grid>
         
         

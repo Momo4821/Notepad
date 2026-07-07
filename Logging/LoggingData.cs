@@ -4,69 +4,53 @@ using Notepad.Functions;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 namespace Notepad.Logging;
 
 public class LoggingData
 {
-
-  
-  private readonly MainWindow _mainWindow;
-  private readonly FileService _fileService;
-  private SettingsView _settingsView;
-  private readonly LoggingData _loggingData;
-  public LoggingData ()
+  public static LoggingData  _loggingDataInstance { get; } = new LoggingData();
+  private readonly LoggingLevelSwitch _levelSwitch;
+  private LoggingData ()
   {
-  
-    _mainWindow = new MainWindow();
-    _loggingData = new LoggingData();
-    _settingsView = new SettingsView();
-    _fileService = new FileService();
-    
-    
-    var levelSwitch = new LoggingLevelSwitch();
+    _levelSwitch = new LoggingLevelSwitch(initialMinimumLevel: LogEventLevel.Information);
+   
     
     
     Log.Logger = new LoggerConfiguration().
       WriteTo.File("Logs/Logs.Txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}").
       MinimumLevel.Information().
-      MinimumLevel.ControlledBy(levelSwitch).
+      MinimumLevel.ControlledBy(_levelSwitch).
       CreateLogger();
     
     Log.Information("Logger Initialized");
     
     
-    
-   
-  
-    
-    
-    
-    
   }
   
-  private void SwitchLoglevel_Debug ()
-  {
-    bool isinformation = Log.IsEnabled(LogEventLevel.Information);
-    bool isdebug = Log.IsEnabled(LogEventLevel.Debug);
-    
-    
-    if (isinformation)
-    {
-     
-        
-      _settingsView.InformationlogLevelButton.IsChecked = true;
-    }
-      
-    
-    if(isdebug)
-    {
-        
-      _settingsView.DebugLogLevelButton.IsChecked = true;
-    }
-       
-       
-  }
+public void SetLogLevelInformation()
+{
+  _levelSwitch.MinimumLevel = LogEventLevel.Information;
+  Log.Information("Log Level set to Information.");
+  
+}
+
+public void SetLogLevelDebug()
+{
+  _levelSwitch.MinimumLevel = LogEventLevel.Debug;
+  Log.Debug("Log Level set to Debug.");
+}
+  
+  
+public LogEventLevel GetCurrentLogLevel ()
+{
+  
+  return _levelSwitch.MinimumLevel;
+  
+}
+  
     
     
   }

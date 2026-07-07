@@ -23,14 +23,14 @@ public partial class MainWindow
         _fileService = new FileService();
         
         
-        
-        
-AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-{
-    Exception ex = (Exception)args.ExceptionObject;
-    Log.Fatal("Unhandled Exception", ex);
+        AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+        {
+            Exception ex = (Exception)args.ExceptionObject;
+            Log.Fatal("Unhandled Exception", ex);
     
-};
+        };
+        
+
     }
     
     public void OpenFile_OnClick(object sender, RoutedEventArgs e)
