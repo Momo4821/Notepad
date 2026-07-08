@@ -10,10 +10,7 @@
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Methods.cs" afterDir="false" />
-    </list>
+    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -260,6 +257,7 @@
       <workItem from="1783314779306" duration="5421000" />
       <workItem from="1783321123276" duration="18885000" />
       <workItem from="1783431020815" duration="8927000" />
+      <workItem from="1783485036712" duration="1056000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed SaveonClick Meothod. Need to still implement a check if file/path exists.">
       <option name="closed" value="true" />
@@ -469,7 +467,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783398986234</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Add GitHub Actions workflow for deploying mdBook site to GitHub Pages">
+      <option name="closed" value="true" />
+      <created>1783486020105</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1783486020105</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,7 +496,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Working on Save File on Exit Method." />
     <MESSAGE value="Fixed Save File on Exit when a File is New." />
     <MESSAGE value="Editing OpenFile Method." />
     <MESSAGE value="10-23-2025 Editing Files." />
@@ -515,7 +520,8 @@
     <MESSAGE value="Add initial book structure with Chapter 1 and summary" />
     <MESSAGE value="Implement logging level selection in SettingsView; refactor logging calls for consistency" />
     <MESSAGE value="Merge pull request #5 from Momo4821/NP3-Logging&#10;&#10;NP3-logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge pull request #5 from Momo4821/NP3-Logging&#10;&#10;NP3-logging" />
+    <MESSAGE value="Add GitHub Actions workflow for deploying mdBook site to GitHub Pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add GitHub Actions workflow for deploying mdBook site to GitHub Pages" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="Merge pull request #5 from Momo4821/NP3-Logging&#10;&#10;NP3-logging" />
   </component>
   <component name="XDebuggerManager">
