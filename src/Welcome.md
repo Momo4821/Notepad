@@ -4,15 +4,26 @@
 
 
 ## Purpose
-- The purpose of Notepad is to provide a lightweight and efficient text editing tool for users who need a simple solution for creating and managing plain text files. It is designed to be accessible to users of all skill levels, from beginners to experienced writers and developers.
-
-- Learning C# functions and methods is a key aspect of using Notepad effectively. By understanding how to utilize C# features, users can enhance their text editing experience, automate tasks, and customize the application to better suit their needs.
+ - I wanted to create a simple text editor to improve my coding skills and start my journey in software development. This project serves as a learning experience and a way to practice programming concepts.
 
 
-### Features
-- **Simple Interface**: Notepad offers a clean and minimalistic design, making it easy to focus on your writing without distractions.
-- **Plain Text Editing**: It supports plain text files, allowing you to work with various file formats such as .txt, .md, and more.
-- **Lightweight**: Notepad is lightweight and fast, ensuring quick startup times and smooth performance even on older systems.
-- **Customizable**: You can customize the font, size, and color scheme to suit your preferences, making your writing experience more comfortable.
+
+
+
+## Technologies Used
+- **Programming Language:** C#
+- **Framework:** .NET
+- **GUI Library:** Windows Forms
+- **Development Environment:** Visual Studio, Jetbrains Rider
+- **Version Control:** Git, GitHub
+- **Build Tools:** MSBuild
+- **Testing Framework:** NUnit, xUnit (in Progress/Learning)
+
+
+
+## Features
+- **Basic Text Editing:** Create, open, edit, and save plain text files.
+- **User-Friendly Interface:** Simple and intuitive design for easy navigation.
+- **Cross-Platform Compatibility:** Runs on Windows, macOS, and Linux (via .
 
 
