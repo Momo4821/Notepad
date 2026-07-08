@@ -15,9 +15,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-nav:
-  - Summary: index.md
-
 jobs:
   build:
     runs-on: ubuntu-latest
