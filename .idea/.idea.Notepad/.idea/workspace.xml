@@ -10,11 +10,33 @@
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="" />
+    <list default="true" id="0041ff3c-416d-4a8d-b32a-d9ac4beb02cc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Notepad/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notepad/src/Welcome.md" beforeDir="false" afterPath="$PROJECT_DIR$/Notepad/src/Welcome.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notepad/src/chapter_1.md" beforeDir="false" afterPath="$PROJECT_DIR$/Notepad/src/chapter_1.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotChats">
+    <option name="panelChat">
+      <chat>
+        <option name="activeSessionId" value="536ed25b-e3e1-4839-a198-226ed49e76e8" />
+        <option name="sessions">
+          <session>
+            <option name="chatType" value="PANEL" />
+            <option name="id" value="536ed25b-e3e1-4839-a198-226ed49e76e8" />
+            <option name="modeId" value="Ask" />
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+            <option name="targetType" value="LOCAL" />
+          </session>
+        </option>
+        <option name="type" value="PANEL" />
+      </chat>
+    </option>
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
@@ -32,6 +54,13 @@
   </component>
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JSON File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <excluded-from-favorite>
@@ -60,15 +89,17 @@
     &quot;assignee&quot;: &quot;Momo4821&quot;
   }
 }</component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="4ffab73a-28e1-42d0-94e7-c152b3aebafb" />
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Momo4821/Notepad.git&quot;,
-    &quot;accountId&quot;: &quot;7a08c6ea-be67-4562-b7f3-3c366e96e268&quot;
+    &quot;accountId&quot;: &quot;dc36bd6d-7b73-4066-ad30-151ad00f1fa0&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Methods.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/FileService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Notepad.csproj.nuget.dgspec.json" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -76,6 +107,21 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="32GUxrHdnNj8NIb62CmIzZJLDwc" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="Ask" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="BACKGROUND" />
+        <option name="worktreeMode" value="WORKSPACE" />
+      </template>
+    </option>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -93,7 +139,8 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#5 on NP3-Logging&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -197,6 +244,23 @@
       <workItem from="1777425519572" duration="16981000" />
       <workItem from="1777703501242" duration="7104000" />
       <workItem from="1777744166334" duration="12288000" />
+      <workItem from="1777846659988" duration="20934000" />
+      <workItem from="1778032485790" duration="1504000" />
+      <workItem from="1778038289242" duration="19886000" />
+      <workItem from="1778236719757" duration="24376000" />
+      <workItem from="1779099824890" duration="9895000" />
+      <workItem from="1779303551281" duration="13244000" />
+      <workItem from="1779633412092" duration="1155000" />
+      <workItem from="1779814911403" duration="3822000" />
+      <workItem from="1780453904480" duration="12049000" />
+      <workItem from="1781129326948" duration="2422000" />
+      <workItem from="1781547203584" duration="2683000" />
+      <workItem from="1781865320502" duration="807000" />
+      <workItem from="1782344933388" duration="8162000" />
+      <workItem from="1782679263398" duration="5424000" />
+      <workItem from="1783314779306" duration="5421000" />
+      <workItem from="1783321123276" duration="18885000" />
+      <workItem from="1783431020815" duration="8927000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed SaveonClick Meothod. Need to still implement a check if file/path exists.">
       <option name="closed" value="true" />
@@ -326,7 +390,87 @@
       <option name="project" value="LOCAL" />
       <updated>1777413673078</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Removed Unnecessary Commments.">
+      <option name="closed" value="true" />
+      <created>1777846716887</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1777846716888</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added LoggingData.cs&#10;Added logs within the Methods.cs&#10;Created a SettingsView.xaml for the Log Settings.">
+      <option name="closed" value="true" />
+      <created>1778467741863</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1778467741863</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added logging functionality with LoggingData class; integrated logs into Methods.cs and created SettingsView.xaml for log settings.">
+      <option name="closed" value="true" />
+      <created>1781547815833</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1781547815833</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Refactored logging calls in Methods.cs to use the updated Log class; added debug logs for better traceability.&#10;Added mdbook for Documentation.">
+      <option name="closed" value="true" />
+      <created>1783320390180</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1783320390180</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Refactored logging calls in Methods.cs to use the updated Log class; added debug logs for better traceability.&#10;Added mdbook for Documentation.">
+      <option name="closed" value="true" />
+      <created>1783320550485</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1783320550485</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Removed empty line from .gitignore to clean up the file.">
+      <option name="closed" value="true" />
+      <created>1783320580883</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1783320580883</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Removed book entry from .gitignore to streamline ignored files.">
+      <option name="closed" value="true" />
+      <created>1783320638079</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1783320638079</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Updated workspace.xml to clean up change list entries and added default GitHub account configuration.">
+      <option name="closed" value="true" />
+      <created>1783321169845</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1783321169845</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Add initial book structure with Chapter 1 and summary">
+      <option name="closed" value="true" />
+      <created>1783321380847</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1783321380847</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Implement logging level selection in SettingsView; refactor logging calls for consistency">
+      <option name="closed" value="true" />
+      <created>1783398986234</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1783398986234</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,6 +478,17 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Fixed SaveonClick Meothod. Need to still implement a check if file/path exists." />
@@ -352,7 +507,16 @@
     <MESSAGE value="Created the new methods in the Methods.cs File." />
     <MESSAGE value="Fixed Methods.cs. All Functions are now called in the MainWindow.xaml.cs." />
     <MESSAGE value="5/3/2026." />
-    <option name="LAST_COMMIT_MESSAGE" value="5/3/2026." />
+    <MESSAGE value="Removed Unnecessary Commments." />
+    <MESSAGE value="Added LoggingData.cs&#10;Added logs within the Methods.cs&#10;Created a SettingsView.xaml for the Log Settings." />
+    <MESSAGE value="Added logging functionality with LoggingData class; integrated logs into Methods.cs and created SettingsView.xaml for log settings." />
+    <MESSAGE value="Refactored logging calls in Methods.cs to use the updated Log class; added debug logs for better traceability.&#10;Added mdbook for Documentation." />
+    <MESSAGE value="Removed empty line from .gitignore to clean up the file." />
+    <MESSAGE value="Removed book entry from .gitignore to streamline ignored files." />
+    <MESSAGE value="Updated workspace.xml to clean up change list entries and added default GitHub account configuration." />
+    <MESSAGE value="Add initial book structure with Chapter 1 and summary" />
+    <MESSAGE value="Implement logging level selection in SettingsView; refactor logging calls for consistency" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement logging level selection in SettingsView; refactor logging calls for consistency" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
