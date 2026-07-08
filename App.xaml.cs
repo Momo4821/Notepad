@@ -13,7 +13,7 @@ namespace Notepad
     {
         private void Window_Startup(object sender, StartupEventArgs args)
         {
-            new LoggingData();
+           
             /*Window window1 = new Window();
             window1.Title = "Notepad";
             window1.Height = 600;

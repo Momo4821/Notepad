@@ -367,6 +367,7 @@ public  class Methods
        Log.Debug("Settingsmenu method called.");
        
     _settingsView = new  SettingsView();
+    _settingsView.Show();
     Log.Debug("Settings menu opened.");
     
 
