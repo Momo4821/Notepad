@@ -6,7 +6,7 @@
  - Stores the full file path of the current or saved file
    - **FilePath**: Holds Full Filepath of the active file. Value is updated after open/save dialog operations.
    - **FileName** : Value is derived from the Filepath. The default value is "Untitled".
-   - **FileType**: Value is derived from the File extensions. The deafult value is *Text Document*.
+   - **FileType**: Value is derived from the File extensions. The default value is *Text Document*.
    - **Downloads Directory**: This is the default Directory for file dialogs.
    - **HasFile**: This will indicate whether a file is currently loaded.
    
@@ -38,8 +38,8 @@
 
 ## LoggingData.cs
  - Serilog is used for logging 
- - Information Loggging is enabled by default.
- - Information and Degbug Logging are implemented.
+ - Information Logging is enabled by default.
+ - Information and Debug Logging are implemented.
 
 
 ## SettingsView.xaml.cs

@@ -13,7 +13,7 @@
 ## Technologies Used
 - **Programming Language:** C#
 - **Framework:** .NET
-- **GUI Library:** Windows Presentaion Foundation(WPF)
+- **GUI Library:** Windows Presentation Foundation(WPF)
 - **Development Environment:** Visual Studio, Jetbrains Rider
 - **Version Control:** Git, GitHub
 - **Build Tools:** MSBuild
