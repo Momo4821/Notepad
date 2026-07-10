@@ -32,7 +32,7 @@
 - There were some functions that I have to code directly in the Mainwindow.xaml.cs file because they are closely tied to the user interface and require direct interaction with the UI elements. These functions handle events triggered by user actions, such as button clicks or menu selections, and need to access specific UI components to perform their tasks effectively.
     - The Textbox_Main-OnKeyDown Method was one method that had to be in the Mainwindow.xaml.
     - This method is for shortcutKeys. If the user pressed F5 There would be a timestamp inside the Textbox.
-    - If the user pressed F6 There would be a bulletein point inside the Textbox.
+    - If the user pressed F6 There would be a bulletin point inside the Textbox.
 
 
 
