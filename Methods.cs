@@ -1,16 +1,14 @@
-﻿using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿using Microsoft.Win32;
 using Notepad.CustomDialog;
 using Notepad.Functions;
 using Notepad.Logging;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
-using Application = System.Windows.Forms.Application;
-using MessageBox = System.Windows.Forms.MessageBox;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using MessageBox = System.Windows.Forms.MessageBox;
+
 
 namespace Notepad;
 
@@ -55,6 +53,7 @@ public  class Methods
             savefiledialog.InitialDirectory = _fileService.Downloads;
             savefiledialog.CheckFileExists = false;
             savefiledialog.OverwritePrompt = true;
+           
             Log.Information("Save File Configuration Used.");
     }
     
@@ -83,10 +82,10 @@ public  class Methods
     
     private void PrintDialogClearUi ()
     {
-        _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-        _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-        _mainWindow.Textbox_Main.BorderThickness = new Thickness(0); 
-        Log.Information($"Textbox Scroll {_mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled}.");
+        _mainWindow.TextboxMain.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+        _mainWindow.TextboxMain.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+        _mainWindow.TextboxMain.BorderThickness = new Thickness(0); 
+        Log.Information($"Textbox Scroll {_mainWindow.TextboxMain.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled}.");
         
     }
     
@@ -96,22 +95,22 @@ public  class Methods
     /// ClearUI method is used to clear the UI when creating a new file or when the user chooses not to save the current file before opening a new one.
     /// It clears the text box and resets the file path and file type labels.
     /// </summary>
-    private void UpdateFilelables(FileService fileService)
+    private void UpdateFilelables()
     {
         Log.Debug($"UpdatefilesLabls method called.");
-        _mainWindow.LabelFilePath.Content = _fileService.Filepath;
-        _mainWindow.LabelFileType.Content = _fileService.FileType;
-        Log.Information($"File {_fileService.Filepath} has been updated.");
+        _mainWindow.LabelFilePath.Content = _fileService.FilePath;
+        _mainWindow.LabelFileType.Content = _fileService.FileType ;
+        Log.Information($"File {_fileService.FilePath} has been updated.");
         Log.Information($"File {_fileService.FileType} has been updated.");
     }
     
     private void ClearUI()
     {
-        Log.Debug($"Clearing UI. Clearing Textbox{_mainWindow.Textbox_Main.Text}, Filepath: {_fileService.Filepath} and Filetype: {_fileService.FileType}.");
-        _mainWindow.Textbox_Main.Clear();
+        Log.Debug($"Clearing UI. Clearing Textbox{_mainWindow.TextboxMain.Text}, Filepath: {_fileService.FilePath} and Filetype: {_fileService.FileType}.");
+        _mainWindow.TextboxMain.Clear();
         _mainWindow.LabelFilePath.Content = "";
         _mainWindow.LabelFileType.Content = "";
-        _fileService.Filepath = null!;
+        _fileService.FilePath = null!;
        // Log.Information($"{_mainWindow.Textbox_Main.Text} and  has been Cleared");
        Log.Information("UI Cleared.");
         
@@ -126,11 +125,11 @@ public  class Methods
        Log.Debug("Openfile method called.");
        if (_fileService.HasFile)
        {
-       Log.Debug($"File {_fileService.Filepath} is currently open. Prompting user to save before opening a new file.");
+       Log.Debug($"File {_fileService.FilePath} is currently open. Prompting user to save before opening a new file.");
            var openfileMessagebox = MessageBoxButtons.YesNoCancel;
            DialogResult Result;
            string caption = "Do you wish to save the current file before opening a new one?";
-           Result = MessageBox.Show(caption, _fileService.Filepath ?? "Untitled", openfileMessagebox);
+           Result = MessageBox.Show(caption, _fileService.FilePath ?? "Untitled", openfileMessagebox);
             Log.Debug($"User selected {Result} in the message box.");
            switch (Result)
            {
@@ -149,7 +148,7 @@ public  class Methods
            }
        
        
-   }
+       }
        else
        {
            Log.Debug("No file is currently open. Proceeding to open a new file.");
@@ -163,13 +162,15 @@ public  class Methods
            ClearUI();
            using(StreamReader sr = new StreamReader(openfileDialog.OpenFile()))
            {
-               _mainWindow.Textbox_Main.Text = sr.ReadToEnd();
-                   
-           }
-           _fileService.Filepath = openfileDialog.FileName;
-           UpdateFilelables(_fileService);
-               
-       }
+               _fileService.FilePath = openfileDialog.FileName;
+               _mainWindow.TextboxMain.Text = sr.ReadToEnd();
+              
+            }
+           UpdateFilelables();
+
+
+
+        }
            
    }
     
@@ -179,15 +180,15 @@ public  class Methods
         Log.Debug("Savefile method called.");
         if (_fileService.HasFile)
         {
-            Log.Debug($"File {_fileService.Filepath} is currently open. Saving the file.");
-            using (StreamWriter sw = new StreamWriter(_fileService.Filepath))
+            Log.Debug($"File {_fileService.FilePath} is currently open. Saving the file.");
+            using (StreamWriter sw = new StreamWriter(_fileService.FilePath))
             {
-                sw.Write(_mainWindow.Textbox_Main.Text);
+                sw.Write(_mainWindow.TextboxMain.Text);
                 
             }
             MessageBox.Show("File Saved.");
             Log.Information($"File Saved {_fileService.FileName}.");
-            UpdateFilelables(_fileService);
+            UpdateFilelables();
             Log.Information("Labels Updated.");
             
             
@@ -212,11 +213,11 @@ public  class Methods
         Log.Debug($"Saving new file as {savefileas.FileName}.");
         using (StreamWriter sw = new StreamWriter(savefileas.OpenFile()))
         {
-            sw.Write(_mainWindow.Textbox_Main.Text);
+            sw.Write(_mainWindow.TextboxMain.Text);
         }
-        _fileService.Filepath = savefileas.FileName;
-        UpdateFilelables(_fileService);
-        Log.Information("File saved successfully at {Path}.", _fileService.Filepath);
+        _fileService.FilePath = savefileas.FileName;
+        UpdateFilelables();
+        Log.Information("File saved successfully at {Path}.", _fileService.FilePath);
         MessageBox.Show("File Saved.");   
         
     }
@@ -240,7 +241,7 @@ public  class Methods
             {
               
                 Log.Information("Printing Document.");
-                printdialog.PrintVisual(_mainWindow.Textbox_Main, "Print Document");
+                printdialog.PrintVisual(_mainWindow.TextboxMain, "Print Document");
             
             }
             else
@@ -257,9 +258,9 @@ public  class Methods
        
       
         Log.Debug("Restoring Textbox Scrollbar Visibility and Border Thickness after printing.");
-        _mainWindow.Textbox_Main.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
-        _mainWindow.Textbox_Main.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-        _mainWindow.Textbox_Main.BorderThickness = new Thickness(1);
+        _mainWindow.TextboxMain.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
+        _mainWindow.TextboxMain.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        _mainWindow.TextboxMain.BorderThickness = new Thickness(1);
       
     }
     
@@ -268,7 +269,7 @@ public  class Methods
        Log.Debug("Exit method called");
         MessageBoxResult Result;
         string caption = "Do you wish to exit the application without saving the current file?";
-        Result = System.Windows.MessageBox.Show(caption, _fileService.Filepath ?? "Untitled", MessageBoxButton.YesNoCancel);
+        Result = System.Windows.MessageBox.Show(caption, _fileService.FilePath ?? "Untitled", MessageBoxButton.YesNoCancel);
        
         Log.Debug($"User Selected: {Result} in the exit prompt.");
         switch (Result)
@@ -292,7 +293,7 @@ public  class Methods
     {
         var create_date_Time
             = DateTime.Now.ToLongDateString() + Environment.NewLine;
-        _mainWindow.Textbox_Main.AppendText(create_date_Time);
+        _mainWindow.TextboxMain.AppendText(create_date_Time);
     }
     
     public void Changefontsize()
@@ -308,12 +309,12 @@ public  class Methods
         if (choosefont.ShowDialog() ==  DialogResult.OK)
         {
             Log.Information("Font Changed to {0}, size {1}.", choosefont.Font.FontFamily.Name, choosefont.Font.Size);
-            _mainWindow.Textbox_Main.Text = choosefont.Font.FontFamily.Name;
-            _mainWindow.Textbox_Main.FontSize = choosefont.Font.Size;
-            _mainWindow.Textbox_Main.FontWeight = choosefont.Font.Bold ? FontWeights.Bold : FontWeights.Regular;
-            _mainWindow.Textbox_Main.FontStyle = choosefont.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
-            _mainWindow.Textbox_Main.TextDecorations = choosefont.Font.Underline ? TextDecorations.Underline : TextDecorations.Baseline;
-             _mainWindow.Textbox_Main.TextDecorations = choosefont.Font.Strikeout ? TextDecorations.Strikethrough : null;
+            _mainWindow.TextboxMain.Text = choosefont.Font.FontFamily.Name;
+            _mainWindow.TextboxMain.FontSize = choosefont.Font.Size;
+            _mainWindow.TextboxMain.FontWeight = choosefont.Font.Bold ? FontWeights.Bold : FontWeights.Regular;
+            _mainWindow.TextboxMain.FontStyle = choosefont.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
+            _mainWindow.TextboxMain.TextDecorations = choosefont.Font.Underline ? TextDecorations.Underline : TextDecorations.Baseline;
+             _mainWindow.TextboxMain.TextDecorations = choosefont.Font.Strikeout ? TextDecorations.Strikethrough : null;
              _mainWindow.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(choosefont.Color.A, choosefont.Color.R, choosefont.Color.G, choosefont.Color.B));
              
         }
@@ -329,7 +330,7 @@ public  class Methods
     {
         Log.Debug("Newfile method called.");
         MessageBoxResult Result;
-        Result = System.Windows.MessageBox.Show("Do you wish to save the current file before creating a new file?", _fileService.Filepath ?? "Untitled", MessageBoxButton.YesNoCancel);
+        Result = System.Windows.MessageBox.Show("Do you wish to save the current file before creating a new file?", _fileService.FilePath ?? "Untitled", MessageBoxButton.YesNoCancel);
 
         Log.Debug($"User Selected: {Result} in the new file prompt.");
         switch (Result)
@@ -354,8 +355,8 @@ public  class Methods
    {
        Log.Debug("Format method called.");
        Char Format = '•';
-       _mainWindow.Textbox_Main.TextWrapping = TextWrapping.Wrap;
-       _mainWindow.Textbox_Main.AppendText(Format + "\n");
+       _mainWindow.TextboxMain.TextWrapping = TextWrapping.Wrap;
+       _mainWindow.TextboxMain.AppendText(Format + "\n");
        Log.Information("• Format Used");
        
        

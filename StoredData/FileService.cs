@@ -5,16 +5,11 @@ namespace Notepad.Functions;
 public class FileService
 {
     
-private string _filePath;
+public string FilePath;
 
 
 
-public string Filepath
-{
-  
-    get => _filePath;
-   set => _filePath = value;
-}
+
     
 
   
@@ -22,16 +17,16 @@ public string Filepath
 /// <summary>
 /// Since File Name can be obtained from file path no need for redudent data being intlized. 
 /// </summary>
-public string FileName => string.IsNullOrEmpty(_filePath) ? "Untitled" : Path.GetFileName(_filePath);
+public string FileName => string.IsNullOrEmpty(FilePath) ? "Untitled" : Path.GetFileName(FilePath);
 
 
-public string FileType => string.IsNullOrEmpty(_filePath) ? "Text Document" : Path.GetExtension(_filePath);
+public string FileType => string.IsNullOrEmpty(FilePath) ? "Text Document" : Path.GetExtension(FilePath);
 
 
 public string Downloads => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
 
 
-public bool HasFile => !string.IsNullOrEmpty(_filePath); 
+public bool HasFile => !string.IsNullOrEmpty(FilePath); 
 
 
 }

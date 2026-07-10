@@ -39,7 +39,7 @@
                     Click="Change_Font_OnClick"
                     Header="ChangeFont" />
                 <MenuItem
-                    x:Name="Time_DateStamp"
+                    x:Name="TimeDateStamp"
                     Click="Time_Date_Stamp_OnClick"
                     Header="Time_dateStamp" />
                 <MenuItem
@@ -59,28 +59,30 @@
                 Height="51"
                 Click="Settings_OnClick"
                 Header="Settings" />
-      
+
             <Label
                 x:Name="LabelFilePath"
-                Width="200"
-                Height="10"
-                Margin="102,20"
+                Width="240"
+                Height="35"
+                Margin="20,0,10,10"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                HorizontalContentAlignment="Center"
-                Content="" />
-            <Label
-                x:Name="LabelFileType"
-                Width="200"
-                Height="20"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                Content="" />
+                />
+            <Label
+                x:Name="LabelFileType"
+                Width="240"
+                Height="35"
+                Margin="20,0,10,10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                 />
         </Menu>
         <TextBox
-            x:Name="Textbox_Main"
+            x:Name="TextboxMain"
             Margin="10,51,19,19"
             Padding="10px"
             AcceptsReturn="True"
@@ -92,8 +94,8 @@
             Text=""
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Visible" />
-       
-        <Popup></Popup>
-        
+
+        <Popup />
+
     </Grid>
 </Window>

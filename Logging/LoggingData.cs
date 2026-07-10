@@ -1,12 +1,8 @@
-﻿using System.IO;
-using Notepad.CustomDialog;
-using Notepad.Functions;
+﻿
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog;
-using Serilog.Core;
-using Serilog.Events;
+
 namespace Notepad.Logging;
 
 public class LoggingData

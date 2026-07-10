@@ -77,23 +77,17 @@ public partial class MainWindow
             = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         bool keyF5Pressed = Keyboard.IsKeyDown(Key.F5);
         bool  keyF6Pressed = Keyboard.IsKeyDown(Key.F6);
-       int caret = Textbox_Main.SelectionStart; 
+       int caret = TextboxMain.SelectionStart; 
        char format = '\u2022';
        
         
         if(keyF5Pressed)
         {
-            /*Textbox_Main.Focus();
-            Textbox_Main.Text = Textbox_Main.Text.Insert(caret,format.ToString());
-            Textbox_Main.Focus();
-            Textbox_Main.SelectionStart =  caret;*/
             
-            
-            Textbox_Main.Focus();
-            Textbox_Main.SelectionStart = Textbox_Main.Text.Length;
-
-            Textbox_Main.Text = Textbox_Main.Text.Insert(caret, createDateTime);
-            Textbox_Main.SelectionStart = caret + createDateTime.Length;
+            TextboxMain.Focus();
+            TextboxMain.SelectionStart = TextboxMain.Text.Length;
+            TextboxMain.Text = TextboxMain.Text.Insert(caret, createDateTime);
+            TextboxMain.SelectionStart = caret + createDateTime.Length;
          
          
          
@@ -106,10 +100,10 @@ public partial class MainWindow
         {
             
             
-           Textbox_Main.Focus();
-           Textbox_Main.SelectionStart = Textbox_Main.SelectionStart;
-           Textbox_Main.Text = Textbox_Main.Text.Insert(caret, format.ToString());
-           Textbox_Main.SelectionStart = caret + format.ToString().Length;
+           TextboxMain.Focus();
+           TextboxMain.SelectionStart = TextboxMain.SelectionStart;
+           TextboxMain.Text = TextboxMain.Text.Insert(caret, format.ToString());
+           TextboxMain.SelectionStart = caret + format.ToString().Length;
            
             
         }
