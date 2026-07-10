@@ -13,7 +13,7 @@
 ## Technologies Used
 - **Programming Language:** C#
 - **Framework:** .NET
-- **GUI Library:** Windows Forms
+- **GUI Library:** Windows Presentaion Foundation(WPF)
 - **Development Environment:** Visual Studio, Jetbrains Rider
 - **Version Control:** Git, GitHub
 - **Build Tools:** MSBuild
@@ -24,6 +24,5 @@
 ## Features
 - **Basic Text Editing:** Create, open, edit, and save plain text files.
 - **User-Friendly Interface:** Simple and intuitive design for easy navigation.
-- **Cross-Platform Compatibility:** Runs on Windows, macOS, and Linux (via .
-
+- **Cross-Platform Compatibility:** Runs on Windows, macOS, and Linux
 

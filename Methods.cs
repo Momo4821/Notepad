@@ -10,7 +10,7 @@ using Serilog.Core;
 using Serilog.Events;
 using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.Forms.MessageBox;
-
+using System.Windows;
 
 namespace Notepad;
 
@@ -275,12 +275,12 @@ public  class Methods
         {
             case MessageBoxResult.Yes:
                 Log.Information("Exiting Application without saving the current file.");
-                Application.Exit();
+                System.Windows.Application.Current.Shutdown();
                 break;
             case MessageBoxResult.No:
                 Savefile();
                 Log.Information("Exiting Application  with saving the current file.");
-                Application.Exit();
+                System.Windows.Application.Current.Shutdown();
                 break;
             case MessageBoxResult.Cancel:
                 break;

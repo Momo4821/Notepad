@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows;
 using Notepad.Logging;
+using Serilog;
 using Application = System.Windows.Application;
 
 namespace Notepad
@@ -11,27 +12,32 @@ namespace Notepad
     /// </summary>
     public partial class App : Application
     {
+        
+        
+        
         private void Window_Startup(object sender, StartupEventArgs args)
         {
-           
-            /*Window window1 = new Window();
-            window1.Title = "Notepad";
-            window1.Height = 600;
-            window1.Width = 800;
-            window1.Show();*/
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            {
+                Exception ex = (Exception)args.ExceptionObject;
+                Log.Fatal("Unhandled Exception", ex);
+    
+            };
+            
+            TaskScheduler.UnobservedTaskException += (sender, args) =>
+            {
+                Log.Fatal("Unobserved TaskException", args.Exception);
+                args.SetObserved();
+            };
+            
+            
+            DispatcherUnhandledException += (sender, args) =>
+            {
+                Log.Fatal("Unhandled DispatcherUnhandledException", args.Exception);
+                args.Handled = true;
+                
+            };
         }
-        
-private void theme_changed(object sender, System.EventArgs e)
-        {
-            // Code to handle theme change
-        }
-
-
-
-
-        
-        
-        
         
 
     }

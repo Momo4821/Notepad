@@ -68,7 +68,6 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Center"
-              
                 Content="" />
             <Label
                 x:Name="LabelFileType"

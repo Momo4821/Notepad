@@ -2,10 +2,8 @@
 using System.Windows.Input;
 using Notepad.CustomDialog;
 using Notepad.Functions;
-using Serilog;
+
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-
-
 
 
 namespace Notepad;
@@ -21,16 +19,6 @@ public partial class MainWindow
         var settingsview = new SettingsView();
         _methods = new Methods(this, settingsview);
         _fileService = new FileService();
-        
-        
-        AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-        {
-            Exception ex = (Exception)args.ExceptionObject;
-            Log.Fatal("Unhandled Exception", ex);
-    
-        };
-        
-
     }
     
     public void OpenFile_OnClick(object sender, RoutedEventArgs e)
@@ -38,8 +26,7 @@ public partial class MainWindow
       _methods.Openfile();
        
     }
-
-
+    
     public void Save_OnClick(object sender, RoutedEventArgs e)
     {
      
@@ -67,11 +54,7 @@ public partial class MainWindow
 
     private void Time_Date_Stamp_OnClick(object sender, RoutedEventArgs e)
     {
-
-
       _methods.Timestamp();
-
-
 
     }
     
@@ -81,9 +64,7 @@ public partial class MainWindow
         _methods.Changefontsize();
         
     }
-
     
-
     private void New_OnClick(object sender, RoutedEventArgs e)
     {
         
@@ -92,32 +73,46 @@ public partial class MainWindow
     
     private void Textbox_Main_OnKeyDown(object sender, KeyEventArgs e)
     {
-        var create_date_Time
-            = DateTime.Now.ToLongDateString() + "\n";
-        bool test = Keyboard.IsKeyDown(Key.F5);
-        bool Key_f5_Pressed = Keyboard.IsKeyDown(Key.F5);
-        if (Key_f5_Pressed)
+        var createDateTime
+            = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        bool keyF5Pressed = Keyboard.IsKeyDown(Key.F5);
+        bool  keyF6Pressed = Keyboard.IsKeyDown(Key.F6);
+       int caret = Textbox_Main.SelectionStart; 
+       char format = '\u2022';
+       
+        
+        if(keyF5Pressed)
         {
+            /*Textbox_Main.Focus();
+            Textbox_Main.Text = Textbox_Main.Text.Insert(caret,format.ToString());
+            Textbox_Main.Focus();
+            Textbox_Main.SelectionStart =  caret;*/
+            
+            
+            Textbox_Main.Focus();
+            Textbox_Main.SelectionStart = Textbox_Main.Text.Length;
 
-            Textbox_Main.AppendText(create_date_Time);
+            Textbox_Main.Text = Textbox_Main.Text.Insert(caret, createDateTime);
+            Textbox_Main.SelectionStart = caret + createDateTime.Length;
+         
+         
+         
+ 
             
         }
-
-
-        bool Key_f6_Pressed = Keyboard.IsKeyDown(Key.F6);
-
-        if (Key_f6_Pressed)
+        
+        
+        if(keyF6Pressed)
         {
-            char format = '•';
-            Textbox_Main.TextWrapping = TextWrapping.Wrap;
             
-
-
+            
+           Textbox_Main.Focus();
+           Textbox_Main.SelectionStart = Textbox_Main.SelectionStart;
+           Textbox_Main.Text = Textbox_Main.Text.Insert(caret, format.ToString());
+           Textbox_Main.SelectionStart = caret + format.ToString().Length;
+           
+            
         }
-
-
-
-
     }
 
     private void Format_OnClick(object sender, RoutedEventArgs e)
