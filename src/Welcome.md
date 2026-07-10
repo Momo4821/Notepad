@@ -17,12 +17,11 @@
 - **Development Environment:** Visual Studio, Jetbrains Rider
 - **Version Control:** Git, GitHub
 - **Build Tools:** MSBuild
-- **Testing Framework:** NUnit, xUnit (in Progress/Learning)
 
 
 
 ## Features
 - **Basic Text Editing:** Create, open, edit, and save plain text files.
 - **User-Friendly Interface:** Simple and intuitive design for easy navigation.
-- **Cross-Platform Compatibility:** Runs on Windows, macOS, and Linux
+- **Cross-Platform Compatibility:** Runs on Windows
 
